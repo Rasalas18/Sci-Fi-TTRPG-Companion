@@ -1,8 +1,0 @@
-/* Stili per QPushButton */
-QPushButton {
-  background-color: green; /* Colore di sfondo verde */
-  border: 1px solid white; /* Bordo bianco di 1px */
-  border-radius: 25px; /* Bordo arrotondato */
-  color: white; /* Colore del testo bianco */
-  font-size: 10pt;
-}

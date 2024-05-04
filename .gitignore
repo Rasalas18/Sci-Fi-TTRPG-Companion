@@ -162,4 +162,4 @@ cython_debug/
 
 
 # Ignored Directory
-assets/
+assets/style_css
