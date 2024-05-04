@@ -1,4 +1,4 @@
-# TTRPG Assistant
+# Sci-Fi TTRPG Companion
 
 This Python program serves as an assistant for players in their tabletop role-playing game (TTRPG) adventures. It offers a range of features to streamline gameplay and enhance immersion.
 
@@ -18,15 +18,9 @@ Python 3.12
 
 ## Installation
 
-1. Ensure Python 3 is installed on your system.
+1. Ensure Python 3.12 is installed on your system.
 2. Clone or download the repository to your local machine.
-3. Run the program using Python 3 and the main file main.py.
-
-
-```bash
-Copy code
-python3 main.py
-```
+3. Run the program using Python 3.12 and the main file **main.py**.
 
 
 ## Usage
