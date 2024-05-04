@@ -162,11 +162,11 @@ cython_debug/
 
 
 # Ignored Directory
-assets/font
-assets/icon
+assets/font/
+assets/icon/
 ttrpglib/__pycache__/
 ttrpglib/utility/__pycache__/
 ttrpglib/stats_tab/__pycache__/
 ttrpglib/data_tab/__pycache__/
 *.pyc
-data/*.json
+*.json
