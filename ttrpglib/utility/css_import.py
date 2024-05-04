@@ -1,6 +1,6 @@
 import os
 
-css_dir = "assets/css"
+css_dir = "assets/style_css"
 
 
 def load_css(file_name):

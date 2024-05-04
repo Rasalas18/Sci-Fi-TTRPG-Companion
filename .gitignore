@@ -168,3 +168,4 @@ ttrpglib/__pycache__
 ttrpglib/utility/__pycache__
 ttrpglib/stats_tab/__pycache__
 ttrpglib/data_tab/__pycache__
+*.pyc
