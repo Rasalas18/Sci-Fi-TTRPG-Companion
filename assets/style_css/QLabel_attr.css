@@ -1,0 +1,6 @@
+/* Stili per attr_label */
+QLabel {
+  color: white; /* Colore del testo bianco */
+  padding-left: 1px; /* Padding a sinistra di 1px */
+  font-size: 12pt; /* Dimensione del carattere 12pt */
+}

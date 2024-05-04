@@ -1,0 +1,5 @@
+/* Stile del QWidget */
+QWidget {
+  background-color: black;
+  color: white;
+}

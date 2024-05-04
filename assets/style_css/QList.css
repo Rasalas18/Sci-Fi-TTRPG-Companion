@@ -1,0 +1,19 @@
+/* Stile di base per la QListWidget */
+QListWidget {
+  background-color: #000000; /* Colore di sfondo */
+  border: 1px solid #ccc; /* Bordo con spessore 1px */
+  padding: 10px; /* Spaziatura interna */
+  font-size: 18px; /* Dimensione del carattere di 18px */
+}
+
+/* Stile per gli elementi della QListWidget */
+QListWidget::item {
+  background-color: transparent; /* Sfondo trasparente */
+  padding: 10px; /* Spaziatura interna */
+}
+
+/* Stile per gli elementi della QListWidget quando sono selezionati */
+QListWidget::item:selected {
+  background-color: green; /* Colore di sfondo selezionato */
+  color: white; /* Colore del testo selezionato */
+}

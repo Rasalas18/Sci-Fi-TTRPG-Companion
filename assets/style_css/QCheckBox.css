@@ -1,0 +1,25 @@
+/* Stile della QCheckBox */
+QCheckBox {
+  padding: 40px; /* Spazio intorno alla checkbox */
+  font-size: 10pt;
+}
+
+QCheckBox::indicator {
+  border: 1px solid white;
+  width: 15px;
+  height: 15px;
+}
+
+/* Stile della casella di controllo quando è controllata */
+QCheckBox::indicator:checked {
+  background-color: #4caf50;
+  border: 1px solid #ffffff;
+  border-radius: 7.5; /* 50% */
+}
+
+/* Stile della casella di controllo quando non è controllata */
+QCheckBox::indicator:unchecked {
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 7.5; /* 50% */
+}

@@ -1,0 +1,24 @@
+/* Stile del pannello QTabWidget */
+QTabWidget::pane {
+  border: 1px solid white; /* Bordo del pannello */
+  margin: 0px; /* Margine del pannello */
+}
+
+/* Stile della barra delle schede QTabBar */
+QTabBar {
+  background: black; /* Colore di sfondo della barra delle schede */
+  border: 0px solid white; /* Bordo della barra delle schede */
+  color: white; /* Colore del testo */
+}
+
+/* Stile della scheda selezionata */
+QTabBar::tab:selected {
+  background: green; /* Colore di sfondo della scheda selezionata */
+}
+
+/* Stile generale delle schede QTabBar */
+QTabBar::tab {
+  height: 20px; /* Altezza della scheda */
+  width: 120px; /* Larghezza della scheda */
+  font-size: 10pt; /* Dimensione del carattere */
+}
