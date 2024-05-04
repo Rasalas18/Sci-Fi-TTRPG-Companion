@@ -165,6 +165,3 @@ cython_debug/
 assets/font/
 assets/icon/
 **.pyc
-data/**.json
-data/**.pickle
-data/**.txt
