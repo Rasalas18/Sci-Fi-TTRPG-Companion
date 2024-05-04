@@ -1,0 +1,27 @@
+/* Stile del QComboBox */
+QComboBox {
+  background-color: black;
+  color: white;
+  border: 1px solid #707070;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12pt;
+}
+
+/* Stile della freccia del ComboBox */
+QComboBox::drop-down {
+  width: 20px;
+  background-color: black;
+}
+
+/* Immagine della freccia del ComboBox */
+QComboBox::down-arrow {
+  background-image: url("assets/icons/arrow.svg");
+}
+
+/* Stile dell'elemento dell'elenco a discesa del ComboBox */
+QComboBox QAbstractItemView {
+  background-color: black;
+  color: white;
+  font-size: 12pt;
+}

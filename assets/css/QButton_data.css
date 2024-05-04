@@ -1,0 +1,14 @@
+/* Stile di base per QPushButton */
+QPushButton {
+  background-color: black; /* Colore di sfondo nero */
+  color: white; /* Colore del testo bianco */
+  font-size: 15px; /* Dimensione del carattere di 18 pixel */
+  border: 1px solid white; /* Bordo solido bianco con uno spessore di 1 pixel */
+  padding: 10px 15px; /* Spaziatura interna di 10 pixel sopra e sotto, 20 pixel a sinistra e a destra */
+}
+
+/* Stile per QPushButton quando viene premuto */
+QPushButton:pressed {
+  background-color: green; /* Cambia il colore di sfondo a verde quando viene premuto */
+  color: white; /* Cambia il colore del testo a bianco quando viene premuto */
+}
