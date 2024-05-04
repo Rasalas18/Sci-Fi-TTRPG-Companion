@@ -9,7 +9,7 @@ QListWidget {
 /* Stile per gli elementi della QListWidget */
 QListWidget::item {
   background-color: transparent; /* Sfondo trasparente */
-  padding: 10px; /* Spaziatura interna */
+  padding: 30px; /* Spaziatura interna */
 }
 
 /* Stile per gli elementi della QListWidget quando sono selezionati */

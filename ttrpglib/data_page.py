@@ -7,7 +7,10 @@ from PyQt5.QtWidgets import (
     QListWidget,
     QGridLayout,
     QFrame,
+    QListWidgetItem,
 )
+
+from PyQt5.QtCore import Qt
 from ttrpglib.utility.css_import import load_css
 
 
@@ -29,7 +32,10 @@ class DataPage(QWidget):
 
         items = ["Pianeti", "Lune", "Asteroidi", "Stazioni Spaziali", "Navi Spaziali"]
 
-        list_widget.addItems(items)
+        for item in items:
+            item = QListWidgetItem(item)
+            item.setTextAlignment(Qt.AlignHCenter)
+            list_widget.addItem(item)
 
         # Aggiungi la QListWidget al layout verticale
         v_layout1.addWidget(list_widget)
@@ -40,7 +46,7 @@ class DataPage(QWidget):
 
         # Crea un layout a griglia all'interno del frame
         grid_layout = QGridLayout(grid_frame)
-        grid_layout.setSpacing(20)
+        grid_layout.setSpacing(35)
 
         # Aggiungi QLabel a tutte le posizioni da (1, 1) a (5, 5)
         for i in range(4):
