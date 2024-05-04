@@ -1,7 +1,7 @@
 # Sci-Fi TTRPG Companion
 
 This Python program serves as an assistant for players in their tabletop role-playing game (TTRPG) adventures. It offers a range of features to streamline gameplay and enhance immersion.
-
+l
 
 ## Key Features
 
