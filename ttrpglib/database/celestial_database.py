@@ -24,7 +24,7 @@ class Database(QWidget):
             os.makedirs(database_dir)
 
         self.database_path = os.path.join(
-            database_dir, f"{self.celestial_body}_database.db"
+            database_dir, f"database_{self.celestial_body}.db"
         )
 
         self.conn = sqlite3.connect(self.database_path)
@@ -58,9 +58,7 @@ class Database(QWidget):
         self.load_from_sql_button.setStyleSheet(load_css("QButton_data.css"))
         self.load_from_sql_button.clicked.connect(self.load_database_from_sql_file)
 
-        self.remove_duplicates_button = QPushButton(
-            f"Rimuovi Duplicati di {celestial_body.capitalize()}"
-        )
+        self.remove_duplicates_button = QPushButton(f"Rimuovi Duplicati")
         self.remove_duplicates_button.setStyleSheet(load_css("QButton_data.css"))
         self.remove_duplicates_button.clicked.connect(self.rmeove_duplicate)
 

@@ -19,10 +19,10 @@ class DataPage(QWidget):
         tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
 
         # Creazione e aggiunta delle schede (tabs) al QTabWidget
-        moon_database = Database("lune")
-        planet_database = Database("pianeti")
-        spaceship_database = Database("navi")
-        spacestation_database = Database("stazioni")
+        moon_database = Database("luna")
+        planet_database = Database("pianeta")
+        spaceship_database = Database("nave")
+        spacestation_database = Database("stazione")
 
         # Aggiungo prima Pianeti e Lune per metterle a sinistra
         tab_widget_data.addTab(moon_database, "Lune")
