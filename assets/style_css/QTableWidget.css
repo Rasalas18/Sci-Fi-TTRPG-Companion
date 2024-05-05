@@ -1,0 +1,49 @@
+/* Stilizzazione generale della QTableWidget */
+QTableWidget {
+  background-color: black; /* Sfondo nero */
+  border: 1px solid white; /* Bordo bianco di 2px */
+  color: white;
+  height: 40px;
+  width: 40px;
+}
+
+/* Stilizzazione degli elementi dell'item */
+QTableWidget::item {
+  padding: 5px; /* Spaziatura interna di 5px */
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+/* Stilizzazione degli elementi selezionati */
+QTableWidget::item:selected {
+  background-color: #008000; /* Sfondo verde */
+  color: white; /* Testo bianco */
+  border: 1px solid white;
+}
+
+/* Stilizzazione dell'header della tabella */
+QHeaderView::section {
+  background-color: #008000; /* Sfondo verde */
+  color: white; /* Testo bianco */
+  padding: 5px;
+  height: 15px;
+}
+
+/* Stilizzazione dell'header della tabella quando è selezionato */
+QHeaderView::section:checked {
+  background-color: #008000; /* Sfondo verde */
+  color: white; /* Testo bianco */
+  border: 1px solid black;
+}
+
+/* Stilizzazione dell'header della tabella al passaggio del mouse */
+QHeaderView::section:hover {
+  background-color: #32cd32; /* Sfondo verde chiaro */
+  color: white; /* Testo bianco */
+}
+
+/* Stile per il pulsante che seleziona tutte le entry */
+QTableCornerButton::section {
+  background-color: green;
+  border: 1px solid black;
+}

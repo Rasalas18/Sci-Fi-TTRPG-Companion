@@ -1,13 +1,14 @@
 /* Stile di base per la QListWidget */
 QListWidget {
   background-color: #000000; /* Colore di sfondo */
-  border: 1px solid #ccc; /* Bordo con spessore 1px */
+  border: 1px solid white; /* Bordo con spessore 1px */
   padding: 10px; /* Spaziatura interna */
   font-size: 18px; /* Dimensione del carattere di 18px */
 }
 
 /* Stile per gli elementi della QListWidget */
 QListWidget::item {
+  color: white;
   background-color: transparent; /* Sfondo trasparente */
   padding: 30px; /* Spaziatura interna */
 }
