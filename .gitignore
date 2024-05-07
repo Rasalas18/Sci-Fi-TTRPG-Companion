@@ -164,4 +164,5 @@ cython_debug/
 # Ignored Directory
 assets/font/
 assets/icon/
+export/
 **.pyc
