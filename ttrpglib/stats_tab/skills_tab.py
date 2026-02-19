@@ -35,7 +35,6 @@ class SkillTable(QWidget):
             "History",
             "Insight",
         ]
-        index = 0
         for i, skill in enumerate(skills1):
             checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
             checkbox.setStyleSheet(load_css("QCheckBox.css"))
@@ -46,7 +45,6 @@ class SkillTable(QWidget):
             if checkboxes_states[i] is True:
                 checkboxes[i].setChecked(True)
                 # checkboxes[i].setStyleSheet(load_css("QCheckBox.css"))
-            index = i
 
         main_layout.addLayout(skill_layout1)
 
@@ -69,7 +67,7 @@ class SkillTable(QWidget):
             "Tech",
         ]
         for j, skill in enumerate(skills2):
-            k = j + index + 1
+            k = j + len(skills1)
             checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
             checkbox.setStyleSheet(load_css("QCheckBox.css"))
             checkbox.clicked.connect(lambda _, pos=k: self.update_checkbox(pos))

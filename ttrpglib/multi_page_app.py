@@ -78,9 +78,6 @@ class MultiPageApp(QMainWindow):
         self.stacked_widget.setCurrentIndex(index)
 
     def closeEvent(self, event):
-        self.save_on_close()
-
-    def save_on_close(self):
         message_box = QMessageBox()
         message_box.setWindowTitle("Conferma")
         message_box.setText("Vuoi salvare prima di chiudere?")
@@ -89,9 +86,11 @@ class MultiPageApp(QMainWindow):
 
         response = message_box.exec_()
 
-        if response == QMessageBox.Yes:  # Aggiungi qui altri saving
+        if response == QMessageBox.Yes:
             save_notes()
             save_stats()
-            self.close()
+            event.accept()
         elif response == QMessageBox.No:
-            self.close()
+            event.accept()
+        else:
+            event.ignore()
