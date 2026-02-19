@@ -10,11 +10,10 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
-# from ttrpglib.stats_tab.abilities_tab import Ability_Table, save_abilities
-from ttrpglib.stats_tab.attr_tab import Attr_Table, save_attr
-from ttrpglib.stats_tab.inv_tab import Inventory_Table, save_inv
-from ttrpglib.stats_tab.skills_tab import Skill_Table, save_skills
-from ttrpglib.stats_tab.traits_tab import Traits_Table, save_traits
+from ttrpglib.stats_tab.attr_tab import AttrTable, save_attr
+from ttrpglib.stats_tab.inv_tab import InventoryTable, save_inv
+from ttrpglib.stats_tab.skills_tab import SkillTable, save_skills
+from ttrpglib.stats_tab.traits_tab import TraitsTable, save_traits
 from ttrpglib.utility.css_import import load_css
 
 
@@ -50,8 +49,7 @@ class StatsPage(QWidget):
         attr_layout = QVBoxLayout(attr_tab)
         attr_layout.setAlignment(Qt.AlignCenter)
 
-        # Includi l'interfaccia delle abilità dalla classe Table di abilities.py
-        self.attr_interface = Attr_Table()
+        self.attr_interface = AttrTable()
         attr_layout.addWidget(self.attr_interface)
 
         # ----------------------------------------------
@@ -83,7 +81,7 @@ class StatsPage(QWidget):
         inventory_layout.setAlignment(Qt.AlignCenter)
 
         # Includi l'interfaccia dell'inventario dalla classe Table di inv_tab.py
-        self.inventory_interface = Inventory_Table()
+        self.inventory_interface = InventoryTable()
         inventory_layout.addWidget(self.inventory_interface)
 
         # ----------------------------------------------
@@ -96,7 +94,7 @@ class StatsPage(QWidget):
         skill_layout = QHBoxLayout(skills_tab)
 
         # Includi l'interfaccia delle skill dalla classe Table di skills_tab.py
-        self.skill_interface = Skill_Table()
+        self.skill_interface = SkillTable()
         skill_layout.addWidget(self.skill_interface)
 
         skills_tab.setFixedSize(450, 500)
@@ -111,22 +109,8 @@ class StatsPage(QWidget):
         traits_layout = QHBoxLayout(traits_tab)
 
         # Includi l'interfaccia delle skill dalla classe Table di traits_tab.py
-        self.traits_interface = Traits_Table()
+        self.traits_interface = TraitsTable()
         traits_layout.addWidget(self.traits_interface)
-
-        # ----------------------------------------------
-        # Tab Widget Right: Abilities
-        # ----------------------------------------------
-
-        # abilities_tab = QWidget()
-
-        # # Aggiunta del layout nella pagina "Abilities" e allineamento centrale dei widget
-        # abilities_layout = QHBoxLayout(abilities_tab)
-        # abilities_layout.setAlignment(Qt.AlignCenter)
-
-        # # Includi l'interfaccia delle abilità dalla classe Table di abilities.py
-        # self.abilites_interface = Ability_Table()
-        # abilities_layout.addWidget(self.abilites_interface)
 
         # ----------------------------------------------
         # Tab Widgets and Layout Top
@@ -137,10 +121,9 @@ class StatsPage(QWidget):
         tab_widget_left.addTab(image_tab, "Image")
         tab_widget_left.addTab(inventory_tab, "Inventory")
 
-        # Aggiunta delle tab skills, traits e abilities al tab_widget_right
+        # Aggiunta delle tab skills e traits al tab_widget_right
         tab_widget_right.addTab(skills_tab, "Skills")
         tab_widget_right.addTab(traits_tab, "Traits")
-        # tab_widget_right.addTab(abilities_tab, "Abilities")
 
         # Aggiunta dei tab widget a layout_top
         layout_top.addWidget(tab_widget_left)
@@ -207,8 +190,6 @@ def load_background():
 
 
 def save_stats():
-
-    # save_abilities()
 
     save_attr()
     save_inv()

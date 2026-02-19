@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QComboBox, QTextEdit
 from ttrpglib.utility.css_import import load_css
 
 
-class Traits_Table(QWidget):
+class TraitsTable(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()

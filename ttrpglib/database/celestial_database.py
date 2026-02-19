@@ -58,9 +58,9 @@ class Database(QWidget):
         self.load_from_sql_button.setStyleSheet(load_css("QButton_data.css"))
         self.load_from_sql_button.clicked.connect(self.load_database_from_sql_file)
 
-        self.remove_duplicates_button = QPushButton(f"Rimuovi Duplicati")
+        self.remove_duplicates_button = QPushButton("Rimuovi Duplicati")
         self.remove_duplicates_button.setStyleSheet(load_css("QButton_data.css"))
-        self.remove_duplicates_button.clicked.connect(self.rmeove_duplicate)
+        self.remove_duplicates_button.clicked.connect(self.remove_duplicate)
 
         self.layout.addWidget(self.planet_table)
         self.layout.addWidget(self.load_from_sql_button)
@@ -104,7 +104,7 @@ class Database(QWidget):
                 f"{self.celestial_body.capitalize()} caricati dal file SQL con successo!",
             )
 
-    def rmeove_duplicate(self):
+    def remove_duplicate(self):
         self.cursor.execute(
             f"""DELETE FROM {self.celestial_body.capitalize()}
                WHERE id NOT IN (SELECT MIN(id)

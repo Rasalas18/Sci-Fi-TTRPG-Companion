@@ -1,0 +1,2262 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+assets/icons/arrow.svg
+assets/icons/outlaw_icon.png
+assets/icons/path_to_icon_1.png
+assets/icons/path_to_icon_3.png
+assets/icons/path_to_icon_4.png
+assets/icons/pc_icon.jpg
+assets/icons/wordsmith_icon.png
+assets/style_css/QButton_addMoney.css
+assets/style_css/QButton_attr.css
+assets/style_css/QButton_data.css
+assets/style_css/QButton_inv.css
+assets/style_css/QButton_MultiPage.css
+assets/style_css/QButton_removeMoney.css
+assets/style_css/QCheckBox.css
+assets/style_css/QComboBox.css
+assets/style_css/QFrame.css
+assets/style_css/QLabel_attr.css
+assets/style_css/QLabel_down.css
+assets/style_css/QLineEdit.css
+assets/style_css/QList.css
+assets/style_css/QTableWidget.css
+assets/style_css/QTabWidget_data.css
+assets/style_css/QTabWidget.css
+assets/style_css/QTextEdit.css
+assets/style_css/QWidget_border.css
+assets/style_css/QWidget.css
+data/attr.json
+data/background.txt
+data/database_in/luna_database_in.sql
+data/database_in/nave_database_in.sql
+data/database_in/pianeta_database_in.sql
+data/database_in/stazione_database_in.sql
+data/database_out/database_luna.db
+data/database_out/database_nave.db
+data/database_out/database_pianeta.db
+data/database_out/database_stazione.db
+data/inv.pickle
+data/note.txt
+data/skills.json
+data/traits.json
+LICENSE.txt
+main.py
+MANIFEST.in
+README.md
+requirements.txt
+setup.cfg
+setup.py
+ttrpglib/__init__.py
+ttrpglib/bounty_page.py
+ttrpglib/data_page.py
+ttrpglib/database/celestial_database.py
+ttrpglib/login_page.py
+ttrpglib/main_page.py
+ttrpglib/map_page.py
+ttrpglib/multi_page_app.py
+ttrpglib/note_page.py
+ttrpglib/stats_page.py
+ttrpglib/stats_tab/attr_tab.py
+ttrpglib/stats_tab/inv_tab.py
+ttrpglib/stats_tab/skills_tab.py
+ttrpglib/stats_tab/traits_tab.py
+ttrpglib/utility/css_import.py
+z_database/database.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="assets/style_css/QButton_attr.css">
+/* Stili per QPushButton */
+QPushButton {
+  background-color: black; /* Colore di sfondo verde */
+  border: 1px solid white; /* Bordo bianco di 1px */
+  border-radius: 25px; /* Bordo arrotondato */
+  color: white; /* Colore del testo bianco */
+  font-size: 10pt;
+}
+</file>
+
+<file path="assets/style_css/QButton_MultiPage.css">
+/* Stile di base per QPushButton */
+QPushButton {
+  background-color: black; /* Colore di sfondo nero */
+  color: white; /* Colore del testo bianco */
+  font-size: 18px; /* Dimensione del carattere di 18 pixel */
+  border: 1px solid white; /* Bordo solido bianco con uno spessore di 1 pixel */
+  padding: 10px 20px; /* Spaziatura interna di 10 pixel sopra e sotto, 20 pixel a sinistra e a destra */
+}
+
+/* Stile per QPushButton quando viene premuto */
+QPushButton:pressed {
+  background-color: green; /* Cambia il colore di sfondo a verde quando viene premuto */
+  color: white; /* Cambia il colore del testo a bianco quando viene premuto */
+}
+</file>
+
+<file path="assets/icons/arrow.svg">
+<svg id="Livello_1" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 179.1 99.05"><defs><style>.cls-1{fill:#3aaa35;}</style></defs><path class="cls-1" d="M20.32,4.2c1.34.92,4.3,2.38,6.52,4.59Q59,40.64,90.88,72.71c6.46,6.46,9.82,6.46,16.24,0L170.4,9.47A35.2,35.2,0,0,1,174,6a9.1,9.1,0,0,1,12.16,1.09,8.75,8.75,0,0,1,.46,11.77,30.84,30.84,0,0,1-2.73,2.88q-38.31,38.32-76.63,76.64c-6.44,6.44-9.84,6.44-16.26,0Q52.67,60.14,14.38,21.79a19.48,19.48,0,0,1-3.92-5C7.58,10.76,11.84,4.22,20.32,4.2Z" transform="translate(-9.57 -4.2)"/></svg>
+</file>
+
+<file path="assets/style_css/QButton_addMoney.css">
+QPushButton {
+  background-color: black;
+  color: green;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px 5px;
+  font-size: 8pt;
+}
+
+QPushButton:pressed {
+  background-color: green;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px 5px;
+  font-size: 8pt;
+}
+</file>
+
+<file path="assets/style_css/QButton_inv.css">
+/* Stile di base per QPushButton */
+QPushButton {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px; /* Bordi arrotondati con un raggio di 10 pixel */
+  padding: 5px 5px; /* Spaziatura interna di 5 pixel sopra e sotto, 5 pixel a sinistra e a destra */
+  font-size: 8pt;
+}
+
+/* Stile per QPushButton quando viene premuto */
+QPushButton:pressed {
+  background-color: green; /* Cambia il colore di sfondo a verde quando viene premuto */
+}
+</file>
+
+<file path="assets/style_css/QButton_removeMoney.css">
+QPushButton {
+  background-color: black;
+  color: red;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px 5px;
+  font-size: 8pt;
+}
+
+QPushButton:pressed {
+  background-color: red;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px 5px;
+  font-size: 8pt;
+}
+</file>
+
+<file path="assets/style_css/QCheckBox.css">
+/* Stile della QCheckBox */
+QCheckBox {
+  padding: 40px; /* Spazio intorno alla checkbox */
+  font-size: 10pt;
+}
+
+QCheckBox::indicator {
+  border: 1px solid white;
+  width: 15px;
+  height: 15px;
+}
+
+/* Stile della casella di controllo quando è controllata */
+QCheckBox::indicator:checked {
+  background-color: #4caf50;
+  border: 1px solid #ffffff;
+  border-radius: 7.5; /* 50% */
+}
+
+/* Stile della casella di controllo quando non è controllata */
+QCheckBox::indicator:unchecked {
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 7.5; /* 50% */
+}
+</file>
+
+<file path="assets/style_css/QComboBox.css">
+/* Stile del QComboBox */
+QComboBox {
+  background-color: black;
+  color: white;
+  border: 1px solid #707070;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12pt;
+}
+
+/* Stile della freccia del ComboBox */
+QComboBox::drop-down {
+  width: 20px;
+  background-color: black;
+}
+
+/* Immagine della freccia del ComboBox */
+QComboBox::down-arrow {
+  background-image: url("assets/icons/arrow.svg");
+}
+
+/* Stile dell'elemento dell'elenco a discesa del ComboBox */
+QComboBox QAbstractItemView {
+  background-color: black;
+  color: white;
+  font-size: 12pt;
+}
+</file>
+
+<file path="assets/style_css/QFrame.css">
+/* style.qframe.css */
+
+QFrame {
+  background-color: black;
+  border: 1px solid white;
+}
+</file>
+
+<file path="assets/style_css/QLabel_attr.css">
+/* Stili per attr_label */
+QLabel {
+  color: white; /* Colore del testo bianco */
+  padding-left: 1px; /* Padding a sinistra di 1px */
+  font-size: 12pt; /* Dimensione del carattere 12pt */
+}
+</file>
+
+<file path="assets/style_css/QLabel_down.css">
+QLabel {
+  color: white;
+  font-size: 12pt;
+  background-color: green;
+  border: 1px solid white;
+}
+</file>
+
+<file path="assets/style_css/QLineEdit.css">
+QLineEdit {
+  color: white;
+  border: 1px solid white;
+  font-size: 10pt;
+}
+</file>
+
+<file path="assets/style_css/QTableWidget.css">
+/* Stilizzazione generale della QTableWidget */
+QTableWidget {
+  background-color: black; /* Sfondo nero */
+  border: 1px solid white; /* Bordo bianco di 2px */
+  color: white;
+  height: 40px;
+  width: 40px;
+}
+
+/* Stilizzazione degli elementi dell'item */
+QTableWidget::item {
+  padding: 5px; /* Spaziatura interna di 5px */
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+}
+
+/* Stilizzazione degli elementi selezionati */
+QTableWidget::item:selected {
+  background-color: #008000; /* Sfondo verde */
+  color: white; /* Testo bianco */
+  border: 1px solid white;
+}
+
+/* Stilizzazione dell'header della tabella */
+QHeaderView::section {
+  background-color: #008000; /* Sfondo verde */
+  color: white; /* Testo bianco */
+  padding: 5px;
+  height: 15px;
+}
+
+/* Stilizzazione dell'header della tabella quando è selezionato */
+QHeaderView::section:checked {
+  background-color: #008000; /* Sfondo verde */
+  color: white; /* Testo bianco */
+  border: 1px solid black;
+}
+
+/* Stilizzazione dell'header della tabella al passaggio del mouse */
+QHeaderView::section:hover {
+  background-color: #32cd32; /* Sfondo verde chiaro */
+  color: white; /* Testo bianco */
+}
+
+/* Stile per il pulsante che seleziona tutte le entry */
+QTableCornerButton::section {
+  background-color: green;
+  border: 1px solid black;
+}
+</file>
+
+<file path="assets/style_css/QTabWidget_data.css">
+/* Stile del pannello QTabWidget */
+QTabWidget::pane {
+  border: 1px solid white; /* Bordo del pannello */
+  margin: 0px; /* Margine del pannello */
+}
+
+/* Stile della barra delle schede QTabBar */
+QTabBar {
+  background: black; /* Colore di sfondo della barra delle schede */
+  border: 0px solid white; /* Bordo della barra delle schede */
+  color: white; /* Colore del testo */
+}
+
+/* Stile della scheda selezionata */
+QTabBar::tab:selected {
+  background: green; /* Colore di sfondo della scheda selezionata */
+}
+
+/* Stile generale delle schede QTabBar */
+QTabBar::tab {
+  height: 20px; /* Altezza della scheda */
+  width: 129px; /* Larghezza della scheda */
+  font-size: 10pt; /* Dimensione del carattere */
+  text-align: center;
+}
+
+/* Stile per la barra disabilitata delle schede del QTabWidget */
+QTabBar::tab:disabled {
+  width: 100px;
+  color: transparent;
+  background: transparent; /* Rendo la barra invisibile */
+}
+</file>
+
+<file path="assets/style_css/QTabWidget.css">
+/* Stile del pannello QTabWidget */
+QTabWidget::pane {
+  border: 1px solid white; /* Bordo del pannello */
+  margin: 0px; /* Margine del pannello */
+}
+
+/* Stile della barra delle schede QTabBar */
+QTabBar {
+  background: black; /* Colore di sfondo della barra delle schede */
+  border: 0px solid white; /* Bordo della barra delle schede */
+  color: white; /* Colore del testo */
+}
+
+/* Stile della scheda selezionata */
+QTabBar::tab:selected {
+  background: green; /* Colore di sfondo della scheda selezionata */
+}
+
+/* Stile generale delle schede QTabBar */
+QTabBar::tab {
+  height: 20px; /* Altezza della scheda */
+  width: 120px; /* Larghezza della scheda */
+  font-size: 10pt; /* Dimensione del carattere */
+}
+</file>
+
+<file path="assets/style_css/QTextEdit.css">
+/* Stile del TextEdit */
+QTextEdit {
+  color: white;
+  border: 1px solid white;
+  font-size: 12pt;
+}
+</file>
+
+<file path="assets/style_css/QWidget_border.css">
+/* Stile del QWidget */
+QWidget {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+</file>
+
+<file path="assets/style_css/QWidget.css">
+/* Stile del QWidget */
+QWidget {
+  background-color: black;
+  color: white;
+}
+</file>
+
+<file path="data/database_in/luna_database_in.sql">
+-- Lunas
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 01', 'Luna', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 02', 'Luna', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 03', 'Luna', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 04', 'Luna', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 05', 'Luna', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 06', 'Luna', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 07', 'Luna', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 08', 'Luna', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 09', 'Luna', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Luna (name, type, position, properties, system) VALUES ('Luna 10', 'Luna', 'Centrale', 'Alleanza', 'White Sun');
+</file>
+
+<file path="data/database_in/nave_database_in.sql">
+-- Spaceships
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 01', 'Nave', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 02', 'Nave', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 03', 'Nave', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 04', 'Nave', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 05', 'Nave', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 06', 'Nave', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 07', 'Nave', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 08', 'Nave', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 09', 'Nave', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Nave (name, type, position, properties, system) VALUES ('Nave 10', 'Nave', 'Centrale', 'Alleanza', 'White Sun');
+</file>
+
+<file path="data/database_in/pianeta_database_in.sql">
+-- Pianetas
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 01', 'Pianeta', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 02', 'Pianeta', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 03', 'Pianeta', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 04', 'Pianeta', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 05', 'Pianeta', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 06', 'Pianeta', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 07', 'Pianeta', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 08', 'Pianeta', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 09', 'Pianeta', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Pianeta (name, type, position, properties, system) VALUES ('Pianeta 10', 'Pianeta', 'Centrale', 'Alleanza', 'White Sun');
+</file>
+
+<file path="data/database_in/stazione_database_in.sql">
+-- Space Staziones
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 01', 'Stazione', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 02', 'Stazione', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 03', 'Stazione', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 04', 'Stazione', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 05', 'Stazione', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 06', 'Stazione', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 07', 'Stazione', 'Centrale', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 08', 'Stazione', 'Cintura', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 09', 'Stazione', 'Frontiera', 'Alleanza', 'White Sun');
+INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 10', 'Stazione', 'Centrale', 'Alleanza', 'White Sun');
+</file>
+
+<file path="LICENSE.txt">
+MIT License
+
+Copyright (c) 2019 Dogeek
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</file>
+
+<file path="MANIFEST.in">
+include *.txt
+</file>
+
+<file path="setup.py">
+from setuptools import find_packages, setup
+
+with open("README.md") as file:
+    readme = file.read()
+
+setup(
+    name="Space_Adv_Program",
+    version="1.0.0",
+    packages=find_packages(exclude=["tests", ".github"]),
+    url="https://github.com/author_name/project_urlname/",
+    license="LICENSE.txt",
+    description="My program for my ttrpg game",
+    long_description=readme,
+    long_description_content_type="text/markdown",  # Specifica il tipo di contenuto del file README
+    author="Rasalas",
+    author_email="lanna.pietro@libero.it",
+)
+</file>
+
+<file path="ttrpglib/__init__.py">
+
+</file>
+
+<file path="ttrpglib/bounty_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class BountyPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        layout = QVBoxLayout(self)
+        label = QLabel("Pagina delle Bounty", alignment=Qt.AlignCenter)
+        label.setStyleSheet("color: green; font-size: 24px;")
+        layout.addWidget(label)
+</file>
+
+<file path="ttrpglib/login_page.py">
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QWidget,
+    QVBoxLayout,
+    QLineEdit,
+    QLabel,
+    QMessageBox,
+)
+from PyQt5.QtGui import QFont
+
+
+class LoginPage(QMainWindow):
+    def __init__(self, login_success):
+        super().__init__()
+
+        self.setWindowTitle("Login")
+        self.setStyleSheet("background-color: black; color: green;")
+
+        self.login_success = login_success
+
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        layout = QVBoxLayout(central_widget)
+
+        self.label_username = QLabel("Username:")
+        self.label_username.setStyleSheet("font-size: 18px;")
+        layout.addWidget(self.label_username)
+
+        self.username_entry = QLineEdit()
+        self.username_entry.setStyleSheet("color: white; border: 1px solid grey")
+        self.username_entry.setFont(QFont("Arial", 12))
+        layout.addWidget(self.username_entry)
+
+        self.label_password = QLabel("Password:")
+        self.label_password.setStyleSheet("font-size: 18px;")
+        layout.addWidget(self.label_password)
+
+        self.password_entry = QLineEdit()
+        self.password_entry.setStyleSheet("color: white; border: 1px solid grey")
+        self.password_entry.setEchoMode(QLineEdit.Password)
+        self.password_entry.setFont(QFont("Arial", 12))
+        layout.addWidget(self.password_entry)
+
+        self.password_entry.returnPressed.connect(self.login)
+
+    def login(self):
+        username = self.username_entry.text()
+        password = self.password_entry.text()
+
+        credentials = {  # Credenziali Corrette
+            "admin": "password",
+            "Dave": "Rivera",
+            "Jordan": "Alken",
+            "Sydney": "Gulsvig",
+            "Tavish": "Stasny",
+        }
+
+        if username in credentials and password == credentials[username]:
+            self.login_success()
+            self.close()
+        else:
+            QMessageBox.critical(
+                self, "Login Error", "Invalid username or password", QMessageBox.Ok
+            )
+</file>
+
+<file path="ttrpglib/main_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class MainPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        layout = QVBoxLayout(self)
+        label = QLabel("Campagna Space Adventure", alignment=Qt.AlignCenter)
+        label.setStyleSheet("color: green; font-size: 24px;")
+        layout.addWidget(label)
+</file>
+
+<file path="ttrpglib/map_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class MapPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        layout = QVBoxLayout(self)
+        label = QLabel("Pagina della Mappa", alignment=Qt.AlignCenter)
+        label.setStyleSheet("color: green; font-size: 24px;")
+        layout.addWidget(label)
+</file>
+
+<file path="ttrpglib/multi_page_app.py">
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QHBoxLayout,
+    QStackedWidget,
+    QMessageBox,
+)
+from ttrpglib.note_page import NotePage, save_notes
+from ttrpglib.map_page import MapPage
+from ttrpglib.bounty_page import BountyPage
+from ttrpglib.data_page import DataPage
+from ttrpglib.stats_page import StatsPage, save_stats
+from ttrpglib.main_page import MainPage
+from ttrpglib.utility.css_import import load_css_with_color
+
+
+class MultiPageApp(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Multi-Page App")
+        self.setStyleSheet("background-color: black;")
+
+        self.central_widget = QWidget()
+        self.central_widget.setStyleSheet("background-color: black;")
+
+        self.setCentralWidget(self.central_widget)
+
+        layout = QVBoxLayout(self.central_widget)
+
+        nav_layout = QHBoxLayout()
+        layout.addLayout(nav_layout)
+
+        self.buttons = []
+        button_labels = ["Home", "Sheet", "Note", "Map", "Data", "Bounty"]
+
+        for label in button_labels:
+            button = QPushButton(label)
+            button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
+            button.clicked.connect(lambda checked, label=label: self.button_func(label))
+            nav_layout.addWidget(button)
+            self.buttons.append(button)
+
+        self.stacked_widget = QStackedWidget()
+        layout.addWidget(self.stacked_widget)
+
+        self.pages = {
+            "Note": NotePage(),
+            "Map": MapPage(),
+            "Bounty": BountyPage(),
+            "Data": DataPage(),
+            "Sheet": StatsPage(),
+            "Home": MainPage(),
+        }
+
+        for page_name, page in self.pages.items():
+            self.stacked_widget.addWidget(page)
+
+        self.show_page("Home")
+        self.multi_update_button_color(self.buttons[0])
+
+    def multi_update_button_color(self, current_button):
+        for button in self.buttons:
+            if button == current_button:
+                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "green"))
+            else:
+                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
+
+    def button_func(self, page_name):
+        current_button = self.sender()
+        self.multi_update_button_color(current_button)
+
+        self.show_page(page_name)
+
+    def show_page(self, page_name):
+        index = list(self.pages.keys()).index(page_name)
+        self.stacked_widget.setCurrentIndex(index)
+
+    def closeEvent(self, event):
+        self.save_on_close()
+
+    def save_on_close(self):
+        message_box = QMessageBox()
+        message_box.setWindowTitle("Conferma")
+        message_box.setText("Vuoi salvare prima di chiudere?")
+        message_box.setIcon(QMessageBox.Question)
+        message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
+        response = message_box.exec_()
+
+        if response == QMessageBox.Yes:  # Aggiungi qui altri saving
+            save_notes()
+            save_stats()
+            self.close()
+        elif response == QMessageBox.No:
+            self.close()
+</file>
+
+<file path="ttrpglib/stats_page.py">
+import os
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QTabWidget,
+    QHBoxLayout,
+    QLabel,
+    QTextEdit,
+)
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
+
+from ttrpglib.stats_tab.attr_tab import AttrTable, save_attr
+from ttrpglib.stats_tab.inv_tab import InventoryTable, save_inv
+from ttrpglib.stats_tab.skills_tab import SkillTable, save_skills
+from ttrpglib.stats_tab.traits_tab import TraitsTable, save_traits
+from ttrpglib.utility.css_import import load_css
+
+
+class StatsPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        # Creazione dei layout di StatsPage
+        layout_main = QVBoxLayout(self)
+        layout_top = QHBoxLayout()
+        layout_bottom = QVBoxLayout()
+        # ----------------------------------------------
+        # Layout Top
+        # ----------------------------------------------
+
+        # Aggiunta dei tab widget per layout_top e modifiche di stile
+        tab_widget_left = QTabWidget()
+        tab_widget_left.setTabShape(QTabWidget.Triangular)
+        tab_widget_left.setStyleSheet(load_css("QTabWidget.css"))
+
+        tab_widget_right = QTabWidget()
+        tab_widget_right.setTabShape(QTabWidget.Triangular)
+        tab_widget_right.setStyleSheet(load_css("QTabWidget.css"))
+
+        # ----------------------------------------------
+        # Tab Widget Left: Attr Tab
+        # ----------------------------------------------
+
+        attr_tab = QWidget()
+
+        # Aggiunta del layout nella pagina "Abilities" e allineamento centrale dei widget
+        attr_layout = QVBoxLayout(attr_tab)
+        attr_layout.setAlignment(Qt.AlignCenter)
+
+        self.attr_interface = AttrTable()
+        attr_layout.addWidget(self.attr_interface)
+
+        # ----------------------------------------------
+        # Tab Widget Left: Image Tab
+        # ----------------------------------------------
+
+        image_tab = QWidget()
+
+        # Aggiunta del layout nella pagina "Image" e allineamento centrale dei widget
+        image_layout = QVBoxLayout(image_tab)
+        image_layout.setAlignment(Qt.AlignCenter)
+
+        # Aggiunta del frame nella pagina "Image" secondo il layout sopra
+        image_label = QLabel()
+        pixmap = QPixmap("assets/icons/pc_icon.jpg")
+
+        # Ridimensiono l'immagine a 400x400 mantenendo l'aspect ratio
+        scaled_pixmap = pixmap.scaled(400, 400, aspectRatioMode=True)
+        image_label.setPixmap(scaled_pixmap)
+        image_layout.addWidget(image_label)
+        # ----------------------------------------------
+        # Tab Widget Left: Inventory Tab
+        # ----------------------------------------------
+
+        inventory_tab = QWidget()
+
+        # Aggiunta del layout nella pagina "Inventory" e allineamento centrale dei widget
+        inventory_layout = QHBoxLayout(inventory_tab)
+        inventory_layout.setAlignment(Qt.AlignCenter)
+
+        # Includi l'interfaccia dell'inventario dalla classe Table di inv_tab.py
+        self.inventory_interface = InventoryTable()
+        inventory_layout.addWidget(self.inventory_interface)
+
+        # ----------------------------------------------
+        # Tab Widget Right: Skills
+        # ----------------------------------------------
+
+        skills_tab = QWidget()
+
+        # Aggiunta del layout nella pagina "Skill"
+        skill_layout = QHBoxLayout(skills_tab)
+
+        # Includi l'interfaccia delle skill dalla classe Table di skills_tab.py
+        self.skill_interface = SkillTable()
+        skill_layout.addWidget(self.skill_interface)
+
+        skills_tab.setFixedSize(450, 500)
+
+        # ----------------------------------------------
+        # Tab Widget Right: Traits
+        # ----------------------------------------------
+
+        traits_tab = QWidget()
+
+        # Aggiunta del layout nella pagina "Traits"
+        traits_layout = QHBoxLayout(traits_tab)
+
+        # Includi l'interfaccia delle skill dalla classe Table di traits_tab.py
+        self.traits_interface = TraitsTable()
+        traits_layout.addWidget(self.traits_interface)
+
+        # ----------------------------------------------
+        # Tab Widgets and Layout Top
+        # ----------------------------------------------
+
+        # Aggiunta delle tab stats, image e inventory al tab_widget_left
+        tab_widget_left.addTab(attr_tab, "Attributes")
+        tab_widget_left.addTab(image_tab, "Image")
+        tab_widget_left.addTab(inventory_tab, "Inventory")
+
+        # Aggiunta delle tab skills e traits al tab_widget_right
+        tab_widget_right.addTab(skills_tab, "Skills")
+        tab_widget_right.addTab(traits_tab, "Traits")
+
+        # Aggiunta dei tab widget a layout_top
+        layout_top.addWidget(tab_widget_left)
+        layout_top.addWidget(tab_widget_right)
+
+        # ----------------------------------------------
+        # Layout Bottom per background (scrollable)
+        # ----------------------------------------------
+
+        tab_widget_down = QTabWidget()
+        tab_widget_down.setTabShape(QTabWidget.Triangular)
+        tab_widget_down.setStyleSheet(load_css("QTabWidget.css"))
+
+        background_label = QLabel("Background")
+        background_label.setStyleSheet(load_css("QLabel_down.css"))
+        background_label.setAlignment(Qt.AlignCenter)
+
+        # Definizione del QTextEdit
+        self.background_text = QTextEdit()
+        self.background_text.textChanged.connect(self.update_background)
+        self.background_text.setStyleSheet(
+            "color: white; font-size: 12pt; width: 400px; height: 100px"
+        )
+        # background_text.setFixedSize(400, 200)  # Imposta dimensioni fisse
+
+        # Aggiunge il QTextEdit scrollabile al layout_bottom
+        layout_bottom.addWidget(background_label)
+        layout_bottom.addWidget(self.background_text)
+
+        global output_dir, text
+        output_dir = "data"
+        text = load_background()
+        self.background_text.setText(text)
+
+        # ----------------------------------------------
+        # Layout Main
+        # ----------------------------------------------
+
+        # Aggiunta dei layout alla finestra principale
+        layout_main.addLayout(layout_top)
+        layout_main.addLayout(layout_bottom)
+
+    def update_background(self):
+        global saved_text
+        saved_text = self.background_text.toPlainText()
+
+
+def save_background():
+
+    output_file = os.path.join(output_dir, "background.txt")
+    with open(output_file, "w") as file:
+        file.write(saved_text)
+
+
+def load_background():
+
+    output_file = os.path.join(output_dir, "background.txt")
+    try:
+        with open(output_file, "r") as file:
+            loaded_text = file.read()
+            return loaded_text
+    except FileNotFoundError:
+        return ""
+
+
+def save_stats():
+
+    save_attr()
+    save_inv()
+    save_skills()
+    save_traits()
+    save_background()
+</file>
+
+<file path="ttrpglib/stats_tab/attr_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import (
+    QWidget,
+    QHBoxLayout,
+    QVBoxLayout,
+    QFrame,
+    QLabel,
+    QPushButton,
+)
+from PyQt5.QtCore import QSize
+from ttrpglib.utility.css_import import load_css, load_css_with_color
+
+
+class AttrTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+    def initUI(self):
+
+        global output_dir, button_state, buttons
+
+        output_dir = "data"
+        button_state = load_attr()
+
+        buttons = [[None for _ in range(6)] for _ in range(4)]
+
+        # Layout principale verticale
+        attr_layout = QVBoxLayout()
+        attr_layout.setContentsMargins(40, 0, 40, 0)
+        attr_layout.setSpacing(30)
+
+        label_texts = ["Strength", "Agility", "Intelligence", "Willpower"]
+        attr_values = ["-2", "-1", "0", "1", "2", "3"]
+
+        # Aggiungi 4 frame allineati verticalmente
+        for text in label_texts:
+            i = label_texts.index(text)
+
+            frame = QFrame(self)
+
+            attr_label = QLabel(text, self)
+            attr_label.setStyleSheet("color: white; font-size: 12pt")
+
+            button_layout = QHBoxLayout()
+            button_layout.addWidget(attr_label)
+
+            for value in attr_values:
+                j = attr_values.index(value)
+                button = QPushButton(f"{value}", self)
+                button.clicked.connect(
+                    lambda _, row=i, col=j: self.attr_button_click(row, col)
+                )
+                button.setFixedSize(QSize(50, 50))
+                button_layout.addWidget(button)
+                buttons[i][j] = button
+
+                self.attr_update_button_color(button, i, j)
+
+            frame.setLayout(button_layout)
+            attr_layout.addWidget(frame)
+
+        self.setLayout(attr_layout)
+        self.setWindowTitle("QtWidget con Frames e Pulsanti")
+
+    def attr_button_click(self, row, col):
+        global button_state
+        button_state[row][col] = not button_state[row][col]
+        self.attr_update_button_color(buttons[row][col], row, col)
+
+    def attr_update_button_color(self, button, row, col):
+
+        if button_state[row][col]:
+            button.setStyleSheet(load_css_with_color("QButton_attr.css", "green"))
+        else:
+            button.setStyleSheet(load_css_with_color("QButton_attr.css", "black"))
+
+
+def save_attr():
+    output_file = os.path.join(output_dir, "attr.json")
+    with open(output_file, "w") as f:
+        json.dump({"attributes": button_state}, f)
+
+
+def load_attr():
+    output_file = os.path.join(output_dir, "attr.json")
+    try:
+        with open(output_file, "r") as f:
+            data = json.load(f)
+            return data["attributes"]
+    except FileNotFoundError:
+        return [[False for _ in range(6)] for _ in range(4)]
+</file>
+
+<file path="ttrpglib/stats_tab/inv_tab.py">
+import os
+import pickle
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QPushButton,
+    QLabel,
+    QLineEdit,
+    QTextEdit,
+    QMessageBox,
+)
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class InventoryTable(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        global inventory, money
+
+        self.setStyleSheet("background-color: black;")
+
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        self.money = load_inv()
+        money = self.money
+
+        self.setup_ui()
+
+        self.show_inv()
+
+    def setup_ui(self):
+        self.inv_layout = QHBoxLayout()
+
+        self.obj_label = QLabel("Oggetto:")
+        self.obj_label.setStyleSheet("color: white; font-size: 10pt")
+        self.obj_entry = QLineEdit()
+        self.obj_entry.setStyleSheet("color: white; border: 1px solid white")
+
+        self.quantity_label = QLabel("Quantità:")
+        self.quantity_label.setStyleSheet("color: white; font-size: 10pt")
+        self.quantity_entry = QLineEdit()
+        self.quantity_entry.setStyleSheet("color: white; border: 1px solid white")
+        self.quantity_entry.setFixedWidth(30)
+
+        self.add_button = QPushButton("Aggiungi")
+        self.add_button.clicked.connect(self.add_object)
+        self.add_button.setStyleSheet(load_css("QButton_inv.css"))
+        self.remove_button = QPushButton("Rimuovi")
+        self.remove_button.clicked.connect(self.remove_object)
+        self.remove_button.setStyleSheet(load_css("QButton_inv.css"))
+
+        self.inv_layout.addWidget(self.obj_label)
+        self.inv_layout.addWidget(self.obj_entry)
+        self.inv_layout.addWidget(self.quantity_label)
+        self.inv_layout.addWidget(self.quantity_entry)
+        self.inv_layout.addWidget(self.add_button)
+        self.inv_layout.addWidget(self.remove_button)
+
+        self.layout.addLayout(self.inv_layout)
+
+        self.inv_label = QLabel("Inventario:")
+        self.inv_label.setStyleSheet("color: white; font-size: 10pt")
+
+        self.inv_text = QTextEdit()
+        self.inv_text.setStyleSheet(
+            "color: white; border: 1px solid white; font-size: 10pt"
+        )
+        self.inv_text.setReadOnly(True)
+
+        self.layout.addWidget(self.inv_label)
+        self.layout.addWidget(self.inv_text)
+
+        left_bottom_layout = QHBoxLayout()
+
+        self.remove_1 = QPushButton("-1")
+        self.remove_1.clicked.connect(lambda: self.update_money(-1))
+        self.remove_1.setStyleSheet(load_css("QButton_removeMoney.css"))
+
+        self.remove_10 = QPushButton("-10")
+        self.remove_10.clicked.connect(lambda: self.update_money(-10))
+        self.remove_10.setStyleSheet(load_css("QButton_removeMoney.css"))
+
+        self.remove_100 = QPushButton("-100")
+        self.remove_100.clicked.connect(lambda: self.update_money(-100))
+        self.remove_100.setStyleSheet(load_css("QButton_removeMoney.css"))
+
+        left_bottom_layout.addWidget(self.remove_1)
+        left_bottom_layout.addWidget(self.remove_10)
+        left_bottom_layout.addWidget(self.remove_100)
+
+        middle_bottom_layout = QHBoxLayout()
+
+        self.money_label = QLabel(f"Money: {self.money}")
+        self.money_label.setStyleSheet("color: white; font-size: 10pt")
+        self.money_label.setAlignment(Qt.AlignCenter)
+
+        right_bottom_layout = QHBoxLayout()
+
+        self.add_100 = QPushButton("+100")
+        self.add_100.clicked.connect(lambda: self.update_money(100))
+        self.add_100.setStyleSheet(load_css("QButton_addMoney.css"))
+
+        self.add_10 = QPushButton("+10")
+        self.add_10.clicked.connect(lambda: self.update_money(10))
+        self.add_10.setStyleSheet(load_css("QButton_addMoney.css"))
+
+        self.add_1 = QPushButton("+1")
+        self.add_1.clicked.connect(lambda: self.update_money(+1))
+        self.add_1.setStyleSheet(load_css("QButton_addMoney.css"))
+
+        middle_bottom_layout.addWidget(self.money_label)
+        right_bottom_layout.addWidget(self.add_100)
+        right_bottom_layout.addWidget(self.add_10)
+        right_bottom_layout.addWidget(self.add_1)
+
+        # Layout principale per i pulsanti in bottom
+        buttons_layout = QHBoxLayout()
+        buttons_layout.addLayout(left_bottom_layout)
+        buttons_layout.addLayout(middle_bottom_layout)
+        buttons_layout.addLayout(right_bottom_layout)
+
+        self.layout.addLayout(buttons_layout)
+
+    def update_money(self, amount):
+        global money
+        self.money += amount
+        money = self.money
+        self.money_label.setText(f"Money: {self.money}")
+
+    def add_object(self):
+        obj = self.obj_entry.text()
+        quantity_str = self.quantity_entry.text()
+        if (
+            not quantity_str.isdigit()
+        ):  # Controlla se l'input della quantità è un numero valido
+            QMessageBox.critical(None, "Errore", "Inserisci una quantità valida.")
+            return
+        quantity_int = int(quantity_str)
+        if obj in inventory:
+            inventory[obj] += quantity_int
+        else:
+            inventory[obj] = quantity_int
+        self.show_inv()
+
+    def remove_object(self):
+        obj = self.obj_entry.text()
+        quantity_str = self.quantity_entry.text()
+        if (
+            not quantity_str.isdigit()
+        ):  # Controlla se l'input della quantità è un numero valido
+            QMessageBox.critical(None, "Errore", "Inserisci una quantità valida.")
+            return
+        quantity_int = int(quantity_str)
+        if obj in inventory:
+            if inventory[obj] >= quantity_int:
+                inventory[obj] -= quantity_int
+                if (
+                    inventory[obj] == 0
+                ):  # Se la quantità diventa 0, rimuovi completamente l'obj dall'inventario
+                    del inventory[obj]
+            else:
+                QMessageBox.critical(
+                    None,
+                    "Errore",
+                    "La quantità specificata è maggiore della quantità presente nell'inventario.",
+                )
+        else:
+            QMessageBox.critical(
+                None, "Errore", "L'obj specificato non è presente nell'inventario."
+            )
+        self.show_inv()
+
+    def show_inv(self):
+        inv_text = ""
+        for obj, quantity in inventory.items():
+            inv_text += f"{obj}: {quantity}\n"
+        self.inv_text.setPlainText(inv_text)
+
+        self.obj_entry.clear()
+        self.quantity_entry.clear()
+
+
+output_dir = "data"
+inventory = {}
+
+
+def save_inv():
+    global output_dir, inventory, money
+    output_file = os.path.join(output_dir, "inv.pickle")
+    data_to_save = {
+        "inventory": inventory,
+        "money": money,  # Salva anche il valore del denaro
+    }
+    with open(output_file, "wb") as f:
+        pickle.dump(data_to_save, f)
+
+
+def load_inv():
+    global output_dir, inventory, money
+    output_file = os.path.join(output_dir, "inv.pickle")
+    try:
+        with open(output_file, "rb") as f:
+            data = pickle.load(f)
+            inventory = data["inventory"]
+            money = data.get("money", 0)  # Imposta il valore del denaro, se presente
+    except FileNotFoundError:
+        return 0
+    return money
+</file>
+
+<file path="ttrpglib/stats_tab/traits_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QComboBox, QTextEdit
+from ttrpglib.utility.css_import import load_css
+
+
+class TraitsTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+    def initUI(self):
+
+        global output_dir, trait_1, trait_2
+
+        output_dir = "data"
+
+        trait_1, trait_2 = load_traits()
+
+        layout1 = QVBoxLayout()
+        layout2 = QVBoxLayout()
+
+        self.descriptions = {
+            "Tratto": "",
+            "Alien DNA": "Ti sei sottoposto volontariamente ad un esperimento che combina DNA umano con quello alieno. Di conseguenza, hai più salute e sei più incline alle modifiche organiche del tuo corpo, ma gli oggetti di cura ed il cibo non sono molto efficaci su di te.",
+            "Dream House": "Sei il proprietario di una casa di lusso su un pianeta paradisiaco! Purtroppo però la casa è accompagnata da un mutuo di 125.000 crediti che deve essere pagato a rate mensili.",
+            "Kid Stuff": "I tuoi genitori sono vivi e vegeti e puoi andarli a trovare a casa loro. Ogni settimana, però, devi inviare il 2% dei tuoi guadagni a loro.",
+            "Spaced": "Il tuo corpo si è acclimatato allo spazio e alla microgravità. Sei più agile e scattante quando sei nello spazio, ma hai difficoltà sulla terra ferma. (Non può essere combinato con Terra Firma)",
+            "Terra Firma": "Non ti sei mai abituato allo spazio e alla microgravità. Sei più agile e scattante sulla terra ferma, ma hai difficoltà nello spazio. (Non può essere combinato con Spaced)",
+            "Wanted": "Qualcuno ha messo una taglia sulla tua testa e ormai la voce si è sparsa. Sei ricercato dai cacciatori di taglie, che potrebbero presentarti per catturarti, o peggio, ucciderti. Di conseguenza, sai bene come nasconderti per passare una notte sicura.",
+        }
+
+        # Primo layout
+        combo_traits1 = QComboBox()
+        combo_traits1.setStyleSheet(load_css("QComboBox.css"))
+        for key in self.descriptions.keys():
+            combo_traits1.addItem(key)
+
+        combo_traits1.currentTextChanged.connect(
+            lambda text: self.show_descr(text, descr_traits1)
+        )
+        combo_traits1.currentTextChanged.connect(
+            lambda temp_trait1=combo_traits1.currentText(): self.update_trait(
+                1, temp_trait1
+            )
+        )
+
+        descr_traits1 = QTextEdit()
+        descr_traits1.setStyleSheet(load_css("QTextEdit.css"))
+        descr_traits1.setReadOnly(True)
+
+        layout1.addWidget(combo_traits1)
+        layout1.addWidget(descr_traits1)
+
+        combo_traits1.setCurrentText(trait_1)
+        self.show_descr(trait_1, descr_traits1)
+
+        # Secondo layout
+        combo_traits2 = QComboBox()
+        combo_traits2.setStyleSheet(load_css("QComboBox.css"))
+
+        for key in self.descriptions.keys():
+            combo_traits2.addItem(key)
+
+        combo_traits2.currentTextChanged.connect(
+            lambda text: self.show_descr(text, descr_traits2)
+        )
+        combo_traits2.currentTextChanged.connect(
+            lambda temp_trait2=combo_traits2.currentText(): self.update_trait(
+                2, temp_trait2
+            )
+        )
+
+        descr_traits2 = QTextEdit()
+        descr_traits2.setStyleSheet(load_css("QTextEdit.css"))
+        descr_traits2.setReadOnly(True)
+
+        layout2.addWidget(combo_traits2)
+        layout2.addWidget(descr_traits2)
+
+        combo_traits2.setCurrentText(trait_2)
+        self.show_descr(trait_2, descr_traits2)
+
+        # Layout principale
+        main_layout = QVBoxLayout()
+        main_layout.addLayout(layout1)
+        main_layout.addLayout(layout2)
+
+        self.setLayout(main_layout)
+
+    def show_descr(self, text, textbox):
+        desc = self.descriptions.get(text, "Descrizione non trovata")
+        # Imposta il testo nella QTextEdit con la descrizione ottenuta
+        textbox.setText(desc)
+
+    def update_trait(self, index, new_trait):
+        global trait_1, trait_2
+        if index == 1:
+            trait_1 = new_trait
+        elif index == 2:
+            trait_2 = new_trait
+
+
+def save_traits():
+    output_file = os.path.join(output_dir, "traits.json")
+    traits = {"Trait 1": trait_1, "Trait 2": trait_2}
+
+    with open(output_file, "w") as f:
+        json.dump(traits, f, indent=4)
+
+
+def load_traits():
+    output_file = os.path.join(output_dir, "traits.json")
+    empty_traits = {"Trait 1": "null", "Trait 2": "null"}
+
+    try:
+        with open(output_file, "r") as f:
+
+            data = json.load(f)
+            trait_1 = data.get("Trait 1")
+            trait_2 = data.get("Trait 2")
+
+            return trait_1, trait_2
+    except FileNotFoundError:
+        return empty_traits
+</file>
+
+<file path="z_database/database.py">
+import sys
+import os
+import re
+import sqlite3
+from PyQt5.QtWidgets import (
+    QApplication,
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QMessageBox,
+    QTableWidget,
+    QTableWidgetItem,
+    QInputDialog,
+    QFileDialog,
+)
+from PyQt5.QtCore import Qt
+
+
+class Planet_Database(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Database Example")
+        self.setGeometry(100, 100, 600, 400)
+
+        database_dir = "data"
+        if not os.path.exists(database_dir):
+            os.makedirs(database_dir)
+
+        self.database_path = os.path.join(database_dir, "database.db")
+
+        self.conn = sqlite3.connect(self.database_path)
+        self.cursor = self.conn.cursor()
+
+        self.cursor.execute(
+            """CREATE TABLE IF NOT EXISTS Planet
+                            (id INTEGER PRIMARY KEY,
+                            name TEXT NOT NULL,
+                            type TEXT NOT NULL)"""
+        )
+        self.conn.commit()
+
+        self.layout = QVBoxLayout()
+
+        self.planet_table = QTableWidget()
+        self.planet_table.setColumnCount(2)
+        self.planet_table.setHorizontalHeaderLabels(["Nome", "Tipo"])
+        self.load_planet()
+        self.planet_table.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        self.add_button = QPushButton("Aggiungi Pianeta")
+        self.add_button.clicked.connect(self.add_planet)
+
+        self.load_from_sql_button = QPushButton("Carica Pianeti da File SQL")
+        self.load_from_sql_button.clicked.connect(self.load_planet_from_sql_file)
+
+        self.save_to_sql_button = QPushButton("Salve Pianeti in File SQL")
+        self.save_to_sql_button.clicked.connect(self.save_database_to_sql_file)
+
+        self.remove_duplicates_button = QPushButton("Rimuovi Duplicati")
+        self.remove_duplicates_button.clicked.connect(self.remove_duplicate_planet)
+
+        self.layout.addWidget(self.planet_table)
+        self.layout.addWidget(self.add_button)
+        self.layout.addWidget(self.load_from_sql_button)
+        self.layout.addWidget(self.save_to_sql_button)
+        self.layout.addWidget(self.remove_duplicates_button)
+
+        self.setLayout(self.layout)
+        self.planet_table.setSortingEnabled(True)
+
+    def load_planet(self):
+        self.planet_table.setRowCount(0)
+        self.cursor.execute("SELECT name, type FROM Planet")
+        planet = self.cursor.fetchall()
+
+        for row_num, planet in enumerate(planet):
+            self.planet_table.insertRow(row_num)
+            for col_num, data in enumerate(planet):
+                item = QTableWidgetItem(data)
+                item.setFlags(item.flags() ^ Qt.ItemIsEditable)
+                self.planet_table.setItem(row_num, col_num, item)
+
+    def add_planet(self):
+        nome, ok = QInputDialog.getText(
+            self, "Inserisci nome", "Inserisci il nome del pianeta: "
+        )
+        if ok:
+            tipo, ok = QInputDialog.getText(
+                self, "Inserisci tipo", "Inserisci il tipo del pianeta:"
+            )
+            if ok:
+                if nome and tipo:
+                    nome = nome.lower()
+                    tipo = tipo.lower()
+
+                    if re.match(r"^[a-zA-Z\s]+$", nome) and re.match(
+                        r"^[a-zA-Z\s]+$", tipo
+                    ):
+                        self.cursor.execute(
+                            "SELECT * FROM Planet WHERE LOWER(name) = ? AND LOWER(type) = ?",
+                            (nome, tipo),
+                        )
+                        existing_planet = self.cursor.fetchone()
+                        if existing_planet:
+                            QMessageBox.warning(
+                                self, "Errore", "Pianeta è già presente nel database!"
+                            )
+                        else:
+                            self.cursor.execute(
+                                "INSERT INTO Planet (name, type) VALUES (?, ?)",
+                                (nome, tipo),
+                            )
+                            self.conn.commit()
+                            QMessageBox.information(
+                                self, "Successo", "Pianeta aggiunto con successo!"
+                            )
+                            self.load_planet()
+                    else:
+                        QMessageBox.warning(self, "Errore", "Nome o Tipo non valido!")
+                else:
+                    QMessageBox.warning(
+                        self, "Errore", "Inserire sia nome che tipo del pianeta!"
+                    )
+
+    def load_planet_from_sql_file(self):
+        file_dialog = QFileDialog(self)
+        filename, _ = file_dialog.getOpenFileName(
+            self,
+            "Select SQL File",
+            "",
+            "SQL files (*.sql);;All files (*)",
+        )
+        if filename:
+            with open(filename, "r") as file:
+                sql_script = file.read()
+                self.cursor.executescript(sql_script)
+            self.conn.commit()
+            self.load_planet()
+            QMessageBox.information(
+                self,
+                "Successo",
+                "Pianeti caricati dal file SQL con successo!",
+            )
+
+    def save_database_to_sql_file(self):
+        file_dialog = QFileDialog(self)
+        filename, _ = file_dialog.getSaveFileName(
+            self,
+            "Save SQL File",
+            "",
+            "SQL files (*.sql);;All files (*)",
+        )
+        if filename:
+            with open(filename, "w") as file:
+                for line in self.conn.iterdump():
+                    file.write(f"{line}\n")
+            QMessageBox.information(
+                self,
+                "Successo",
+                "Database salvato sul file SQL con successo!",
+            )
+
+    def remove_duplicate_planet(self):
+        self.cursor.execute(
+            """DELETE FROM Planet
+               WHERE id NOT IN (SELECT MIN(id)
+                                FROM Planet
+                                GROUP BY LOWER(name), LOWER(type))"""
+        )
+        self.conn.commit()
+        self.load_planet()
+        QMessageBox.information(
+            self,
+            "Successo",
+            "Duplicati rimossi con successo!",
+        )
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Planet_Database()
+    window.show()
+    sys.exit(app.exec_())
+</file>
+
+<file path="requirements.txt">
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+</file>
+
+<file path="setup.cfg">
+[flake8]
+ignore = F541, E501
+
+[metadata]
+license_file = LICENSE
+</file>
+
+<file path="ttrpglib/database/celestial_database.py">
+import os
+import sqlite3
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QMessageBox,
+    QTableWidget,
+    QTableWidgetItem,
+    QFileDialog,
+)
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class Database(QWidget):
+    def __init__(self, celestial_body):
+        super().__init__()
+
+        self.celestial_body = celestial_body.lower()
+
+        database_dir = "data/database_out"
+        if not os.path.exists(database_dir):
+            os.makedirs(database_dir)
+
+        self.database_path = os.path.join(
+            database_dir, f"database_{self.celestial_body}.db"
+        )
+
+        self.conn = sqlite3.connect(self.database_path)
+        self.cursor = self.conn.cursor()
+
+        self.cursor.execute(
+            f"""CREATE TABLE IF NOT EXISTS {celestial_body.capitalize()}
+               (id INTEGER PRIMARY KEY,
+               name TEXT NOT NULL,
+               type TEXT NOT NULL,
+               position TEXT NOT NULL,
+               properties TEXT NOT NULL,
+               system TEXT NOT NULL)"""
+        )
+        self.conn.commit()
+
+        self.layout = QVBoxLayout()
+
+        self.planet_table = QTableWidget()
+        self.planet_table.setStyleSheet(load_css("QTableWidget.css"))
+        self.planet_table.setColumnCount(5)
+        self.planet_table.setHorizontalHeaderLabels(
+            ["Nome", "Tipo", "Posizione", "Proprietà", "Sistema"]
+        )
+        self.load_database()
+        self.planet_table.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        self.load_from_sql_button = QPushButton(
+            f"Carica {celestial_body.capitalize()} da File SQL"
+        )
+        self.load_from_sql_button.setStyleSheet(load_css("QButton_data.css"))
+        self.load_from_sql_button.clicked.connect(self.load_database_from_sql_file)
+
+        self.remove_duplicates_button = QPushButton("Rimuovi Duplicati")
+        self.remove_duplicates_button.setStyleSheet(load_css("QButton_data.css"))
+        self.remove_duplicates_button.clicked.connect(self.remove_duplicate)
+
+        self.layout.addWidget(self.planet_table)
+        self.layout.addWidget(self.load_from_sql_button)
+        self.layout.addWidget(self.remove_duplicates_button)
+
+        self.setLayout(self.layout)
+        self.planet_table.setSortingEnabled(True)
+
+    def load_database(self):
+        self.planet_table.setRowCount(0)
+        self.cursor.execute(
+            f"SELECT name, type, position, properties, system FROM {self.celestial_body.capitalize()}"
+        )
+        planets = self.cursor.fetchall()
+
+        for row_num, planet in enumerate(planets):
+            self.planet_table.insertRow(row_num)
+            for col_num, data in enumerate(planet):
+                item = QTableWidgetItem(data)
+                item.setFlags(item.flags() ^ Qt.ItemIsEditable)
+                item.setTextAlignment(Qt.AlignCenter)
+                self.planet_table.setItem(row_num, col_num, item)
+
+    def load_database_from_sql_file(self):
+        file_dialog = QFileDialog(self)
+        filename, _ = file_dialog.getOpenFileName(
+            self,
+            f"Select SQL File for {self.celestial_body.capitalize()}",
+            "",
+            "SQL files (*.sql);;All files (*)",
+        )
+        if filename:
+            with open(filename, "r") as file:
+                sql_script = file.read()
+                self.cursor.executescript(sql_script)
+            self.conn.commit()
+            self.load_database()
+            QMessageBox.information(
+                self,
+                "Successo",
+                f"{self.celestial_body.capitalize()} caricati dal file SQL con successo!",
+            )
+
+    def remove_duplicate(self):
+        self.cursor.execute(
+            f"""DELETE FROM {self.celestial_body.capitalize()}
+               WHERE id NOT IN (SELECT MIN(id)
+                                FROM {self.celestial_body.capitalize()}
+                                GROUP BY LOWER(name), LOWER(type), LOWER(position), LOWER(properties), LOWER(system))"""
+        )
+        self.conn.commit()
+        self.load_database()
+        QMessageBox.information(
+            self,
+            "Successo",
+            f"Duplicati di {self.celestial_body.capitalize()} rimossi con successo!",
+        )
+</file>
+
+<file path="ttrpglib/note_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTextEdit
+import os
+from ttrpglib.utility.css_import import load_css
+
+
+class NotePage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        global output_dir, note
+
+        output_dir = "data"
+
+        layout = QVBoxLayout(self)
+        self.note_text = QTextEdit()
+        self.note_text.textChanged.connect(self.update_notes)
+        self.note_text.setStyleSheet(load_css("QTextEdit.css"))
+        layout.addWidget(self.note_text)
+
+        note = load_notes()
+        self.note_text.setText(note)
+
+    def update_notes(self):
+        global saved_note
+        saved_note = self.note_text.toPlainText()
+
+
+def save_notes():
+    output_file = os.path.join(output_dir, "note.txt")
+    with open(output_file, "w") as file:
+        file.write(saved_note)
+
+
+def load_notes():
+    output_file = os.path.join(output_dir, "note.txt")
+    try:
+        with open(output_file, "r") as file:
+            loaded_note = file.read()
+            return loaded_note
+    except FileNotFoundError:
+        return ""
+</file>
+
+<file path="ttrpglib/stats_tab/skills_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QCheckBox
+from ttrpglib.utility.css_import import load_css
+
+
+class SkillTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+    def initUI(self):
+
+        global checkboxs_states, checkboxs, output_dir
+
+        output_dir = "data"
+
+        checkboxs_states = load_skills()
+        checkboxs = [None for _ in range(25)]
+
+        main_layout = QHBoxLayout()
+
+        skill_layout1 = QVBoxLayout()
+        skills1 = [
+            "Acrobatics",
+            "Alien",
+            "Athletics",
+            "Constitution",
+            "Diplomacy",
+            "Drive",
+            "Engineering",
+            "Gambling",
+            "Hacking",
+            "History",
+            "Insight",
+        ]
+        index = 0
+        for i, skill in enumerate(skills1):
+            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
+            checkbox.setStyleSheet(load_css("QCheckBox.css"))
+            checkbox.clicked.connect(lambda _, pos=i: self.update_checkbox(pos))
+            skill_layout1.addWidget(checkbox)
+            checkboxs[i] = checkbox
+
+            if checkboxs_states[i] is True:
+                checkboxs[i].setChecked(True)
+                # checkboxs[i].setStyleSheet(load_css("QCheckBox.css"))
+            index = i
+
+        main_layout.addLayout(skill_layout1)
+
+        # Layout per le skill group 2
+        skill_layout2 = QVBoxLayout()
+        skills2 = [
+            "Languages",
+            "Manipulation",
+            "Medic",
+            "Melee",
+            "Perception",
+            "Performance",
+            "Pilot",
+            "Religion",
+            "Science",
+            "Shooting",
+            "Sleight of Hand",
+            "Stealth",
+            "Survival",
+            "Tech",
+        ]
+        for j, skill in enumerate(skills2):
+            k = j + index + 1
+            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
+            checkbox.setStyleSheet(load_css("QCheckBox.css"))
+            checkbox.clicked.connect(lambda _, pos=k: self.update_checkbox(pos))
+            skill_layout2.addWidget(checkbox)
+            checkboxs[k] = checkbox
+
+            if checkboxs_states[k] is True:
+                checkboxs[k].setChecked(True)
+                # checkboxs[k].setStyleSheet(load_css("QCheckBox.css"))
+
+        main_layout.addLayout(skill_layout2)
+
+        self.setLayout(main_layout)
+
+    def update_checkbox(self, pos):
+        global checkboxs_states
+        checkboxs_states[pos] = not checkboxs_states[pos]
+
+
+def save_skills():
+    output_file = os.path.join(output_dir, "skills.json")
+    with open(output_file, "w") as f:
+        json.dump(checkboxs_states, f)
+
+
+def load_skills():
+    output_file = os.path.join(output_dir, "skills.json")
+    try:
+        with open(output_file, "r") as f:
+            data = json.load(f)
+            return data
+    except FileNotFoundError:
+        return [False for _ in range(25)]
+</file>
+
+<file path="ttrpglib/utility/css_import.py">
+import os
+
+css_dir = "assets/style_css"
+
+
+def load_css(file_name):
+    file_path = os.path.join(css_dir, file_name)
+    with open(file_path, "r") as file:
+        return file.read()
+
+
+def load_css_with_color(file_name, background_color):
+    css = load_css(file_name)
+    return css + f"\nQPushButton {{ background-color: {background_color}; }}"
+</file>
+
+<file path="assets/style_css/QButton_data.css">
+/* Stile di base per QPushButton */
+QPushButton {
+  background-color: black; /* Colore di sfondo nero */
+  color: white; /* Colore del testo bianco */
+  font-size: 15px; /* Dimensione del carattere di 18 pixel */
+  border: 1px solid white; /* Bordo solido bianco con uno spessore di 1 pixel */
+  padding: 10px 10px; /* Spaziatura interna di 10 pixel sopra e sotto, 20 pixel a sinistra e a destra */
+  width: 60px;
+  height: 20px;
+}
+
+/* Stile per QPushButton quando viene premuto */
+QPushButton:pressed {
+  background-color: green; /* Cambia il colore di sfondo a verde quando viene premuto */
+  color: white; /* Cambia il colore del testo a bianco quando viene premuto */
+}
+</file>
+
+<file path="assets/style_css/QList.css">
+/* Stile di base per la QListWidget */
+QListWidget {
+  background-color: #000000; /* Colore di sfondo */
+  border: 1px solid white; /* Bordo con spessore 1px */
+  padding: 10px; /* Spaziatura interna */
+  font-size: 18px; /* Dimensione del carattere di 18px */
+}
+
+/* Stile per gli elementi della QListWidget */
+QListWidget::item {
+  color: white;
+  background-color: transparent; /* Sfondo trasparente */
+  padding: 30px; /* Spaziatura interna */
+}
+
+/* Stile per gli elementi della QListWidget quando sono selezionati */
+QListWidget::item:selected {
+  background-color: green; /* Colore di sfondo selezionato */
+  color: white; /* Colore del testo selezionato */
+}
+</file>
+
+<file path="data/background.txt">
+
+</file>
+
+<file path="data/note.txt">
+
+</file>
+
+<file path="data/traits.json">
+{
+    "Trait 1": "Tratto",
+    "Trait 2": "Tratto"
+}
+</file>
+
+<file path="data/skills.json">
+[false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+</file>
+
+<file path="ttrpglib/data_page.py">
+from PyQt5.QtWidgets import QWidget, QTabWidget, QHBoxLayout
+from ttrpglib.database.celestial_database import Database
+from ttrpglib.utility.css_import import load_css
+
+
+class DataPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+
+        # Creazione di un layout verticale per la pagina dei dati
+        data_layout = QHBoxLayout()
+
+        # Creazione del QTabWidget
+        tab_widget_data = QTabWidget()
+        tab_widget_data.setTabShape(QTabWidget.Triangular)
+        tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
+
+        # Creazione e aggiunta delle schede (tabs) al QTabWidget
+        moon_database = Database("luna")
+        planet_database = Database("pianeta")
+        spaceship_database = Database("nave")
+        spacestation_database = Database("stazione")
+
+        # Aggiungo prima Pianeti e Lune per metterle a sinistra
+        tab_widget_data.addTab(moon_database, "Lune")
+        tab_widget_data.addTab(planet_database, "Pianeti")
+
+        # Inserisci 3 tab vuote tra "Pianeti" e "Spaceship"
+        for _ in range(6):
+            empty_tab = QWidget()
+            tab_widget_data.addTab(empty_tab, "")
+            tab_widget_data.setTabEnabled(tab_widget_data.indexOf(empty_tab), False)
+
+        tab_widget_data.addTab(spaceship_database, "Navi")
+        tab_widget_data.addTab(spacestation_database, "Stazioni")
+
+        # Aggiunta del QTabWidget al layout verticale
+        data_layout.addWidget(tab_widget_data)
+
+        # Impostazione del layout per la finestra
+        self.setLayout(data_layout)
+
+
+# finire stile QTableWidget e box quando carichi o rimuovi
+</file>
+
+<file path="data/attr.json">
+{"attributes": [[true, true, false, false, false, false], [false, false, false, false, false, false], [false, false, false, false, false, false], [false, false, false, false, false, false]]}
+</file>
+
+<file path="README.md">
+# Sci-Fi TTRPG Companion
+
+This Python program serves as an assistant for players in their tabletop role-playing game (TTRPG) adventures. It offers a range of features to streamline gameplay and enhance immersion.
+
+
+## Key Features
+
+- **Character Sheet Creation**: Create character sheets for your TTRPG characters, including details such as attributes, skills, and backstory.
+- **Map Access**: Gain access to a detailed map of the game world, including information on planets and various celestial bodies.
+- **Inventory Management**: Easily manage your character's inventory, including items, weapons, and equipment.
+- **Note-taking**: Take notes during gameplay to keep track of important information, plot points, and character development.
+
+
+## Requirements
+
+Python 3.12
+
+
+## Installation
+
+1. Ensure Python 3.12 is installed on your system.
+2. Clone or download the repository to your local machine.
+3. Run the program using Python 3.12 and the main file **main.py**.
+
+
+## Usage
+
+1. Launch the program by executing `main.py`.
+2. When prompted for login credentials, use the following:
+   - Username: admin
+   - Password: password
+3. Follow the on-screen instructions to navigate through the available features.
+4. Utilize the features to create character sheets, access maps and celestial data, manage inventory, and take notes as needed during gameplay.
+
+
+## Contributions
+
+Contributions are welcome! If you have ideas for improving the program, fixing bugs, or adding new features, feel free to open a pull request.
+
+
+## Bug Reporting
+
+Encountered a bug? Please report it by opening a new issue in the repository.
+
+
+## Authors
+
+This program was developed by Rasalas18.
+
+
+## License
+
+This project is distributed under the MIT license. Refer to the LICENSE file for further details.
+</file>
+
+<file path="main.py">
+import sys
+from PyQt5.QtWidgets import QApplication
+from ttrpglib.login_page import LoginPage
+from ttrpglib.multi_page_app import MultiPageApp
+
+
+def main():
+    def login_success():
+        multi_page_app = MultiPageApp()
+        multi_page_app.show()
+        multi_page_app.setFixedSize(1152, 864)  # Imposta le dimensioni fisse
+        # app_size = multi_page_app.size()
+        # print("Dimensioni di MultiPageApp:", app_size.width(), "x", app_size.height())
+
+    app = QApplication(sys.argv)
+    login_page = LoginPage(login_success)
+    login_page.show()
+    sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path=".gitignore">
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+
+# Ignored Directory
+assets/font/
+assets/icon/
+export/
+**.pyc
+</file>
+
+</files>

@@ -39,4 +39,4 @@ def load_notes():
             loaded_note = file.read()
             return loaded_note
     except FileNotFoundError:
-        return 0
+        return ""

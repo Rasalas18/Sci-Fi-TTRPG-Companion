@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QCheckBox
 from ttrpglib.utility.css_import import load_css
 
 
-class Skill_Table(QWidget):
+class SkillTable(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()

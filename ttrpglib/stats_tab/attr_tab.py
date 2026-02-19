@@ -9,10 +9,10 @@ from PyQt5.QtWidgets import (
     QPushButton,
 )
 from PyQt5.QtCore import QSize
-from ttrpglib.utility.css_import import load_css
+from ttrpglib.utility.css_import import load_css, load_css_with_color
 
 
-class Attr_Table(QWidget):
+class AttrTable(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -73,9 +73,9 @@ class Attr_Table(QWidget):
     def attr_update_button_color(self, button, row, col):
 
         if button_state[row][col]:
-            button.setStyleSheet(load_css("QButton_attr_green.css"))
+            button.setStyleSheet(load_css_with_color("QButton_attr.css", "green"))
         else:
-            button.setStyleSheet(load_css("QButton_attr_black.css"))
+            button.setStyleSheet(load_css_with_color("QButton_attr.css", "black"))
 
 
 def save_attr():

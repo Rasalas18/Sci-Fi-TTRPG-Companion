@@ -14,7 +14,7 @@ from PyQt5.QtCore import Qt
 from ttrpglib.utility.css_import import load_css
 
 
-class Inventory_Table(QWidget):
+class InventoryTable(QWidget):
     def __init__(self):
         super().__init__()
 

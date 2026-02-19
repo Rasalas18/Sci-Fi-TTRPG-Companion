@@ -13,7 +13,7 @@ from ttrpglib.bounty_page import BountyPage
 from ttrpglib.data_page import DataPage
 from ttrpglib.stats_page import StatsPage, save_stats
 from ttrpglib.main_page import MainPage
-from ttrpglib.utility.css_import import load_css
+from ttrpglib.utility.css_import import load_css_with_color
 
 
 class MultiPageApp(QMainWindow):
@@ -37,7 +37,7 @@ class MultiPageApp(QMainWindow):
 
         for label in button_labels:
             button = QPushButton(label)
-            button.setStyleSheet(load_css("QButton_MultiPage_black.css"))
+            button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
             button.clicked.connect(lambda checked, label=label: self.button_func(label))
             nav_layout.addWidget(button)
             self.buttons.append(button)
@@ -63,9 +63,9 @@ class MultiPageApp(QMainWindow):
     def multi_update_button_color(self, current_button):
         for button in self.buttons:
             if button == current_button:
-                button.setStyleSheet(load_css("QButton_MultiPage_green.css"))
+                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "green"))
             else:
-                button.setStyleSheet(load_css("QButton_MultiPage_black.css"))
+                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
 
     def button_func(self, page_name):
         current_button = self.sender()
