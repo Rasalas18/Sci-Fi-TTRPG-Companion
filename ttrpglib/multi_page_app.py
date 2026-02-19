@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
     QStackedWidget,
     QMessageBox,
 )
-from ttrpglib.note_page import NotePage, save_notes
+from ttrpglib.note_page import NotePage
 from ttrpglib.map_page import MapPage
 from ttrpglib.bounty_page import BountyPage
 from ttrpglib.data_page import DataPage
@@ -87,7 +87,8 @@ class MultiPageApp(QMainWindow):
         response = message_box.exec_()
 
         if response == QMessageBox.Yes:
-            save_notes()
+            self.pages["Note"].save_notes()
+            self.pages["Sheet"].save_background()
             save_stats()
             event.accept()
         elif response == QMessageBox.No:

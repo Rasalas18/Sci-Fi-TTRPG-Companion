@@ -143,7 +143,6 @@ class StatsPage(QWidget):
 
         # Definizione del QTextEdit
         self.background_text = QTextEdit()
-        self.background_text.textChanged.connect(self.update_background)
         self.background_text.setStyleSheet(
             "color: white; font-size: 12pt; width: 400px; height: 100px"
         )
@@ -153,10 +152,8 @@ class StatsPage(QWidget):
         layout_bottom.addWidget(background_label)
         layout_bottom.addWidget(self.background_text)
 
-        global output_dir, text
-        output_dir = "data"
-        text = load_background()
-        self.background_text.setText(text)
+        self.output_dir = "data"
+        self.background_text.setText(self.load_background())
 
         # ----------------------------------------------
         # Layout Main
@@ -166,27 +163,20 @@ class StatsPage(QWidget):
         layout_main.addLayout(layout_top)
         layout_main.addLayout(layout_bottom)
 
-    def update_background(self):
-        global saved_text
-        saved_text = self.background_text.toPlainText()
+    def save_background(self):
 
+        output_file = os.path.join(self.output_dir, "background.txt")
+        with open(output_file, "w") as file:
+            file.write(self.background_text.toPlainText())
 
-def save_background():
+    def load_background(self):
 
-    output_file = os.path.join(output_dir, "background.txt")
-    with open(output_file, "w") as file:
-        file.write(saved_text)
-
-
-def load_background():
-
-    output_file = os.path.join(output_dir, "background.txt")
-    try:
-        with open(output_file, "r") as file:
-            loaded_text = file.read()
-            return loaded_text
-    except FileNotFoundError:
-        return ""
+        output_file = os.path.join(self.output_dir, "background.txt")
+        try:
+            with open(output_file, "r") as file:
+                return file.read()
+        except FileNotFoundError:
+            return ""
 
 
 def save_stats():
@@ -195,4 +185,3 @@ def save_stats():
     save_inv()
     save_skills()
     save_traits()
-    save_background()

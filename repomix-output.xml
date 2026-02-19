@@ -491,7 +491,8 @@ INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazion
 {
     "inventory": {
         "Pene": 9,
-        "Penino": 10
+        "Penino": 10,
+        "cazzi": 10
     },
     "money": 300
 }
@@ -681,235 +682,6 @@ ignore = F541, E501
 license_file = LICENSE
 </file>
 
-<file path="ttrpglib/multi_page_app.py">
-from PyQt5.QtWidgets import (
-    QMainWindow,
-    QWidget,
-    QVBoxLayout,
-    QPushButton,
-    QHBoxLayout,
-    QStackedWidget,
-    QMessageBox,
-)
-from ttrpglib.note_page import NotePage, save_notes
-from ttrpglib.map_page import MapPage
-from ttrpglib.bounty_page import BountyPage
-from ttrpglib.data_page import DataPage
-from ttrpglib.stats_page import StatsPage, save_stats
-from ttrpglib.main_page import MainPage
-from ttrpglib.utility.css_import import load_css_with_color
-
-
-class MultiPageApp(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Multi-Page App")
-        self.setStyleSheet("background-color: black;")
-
-        self.central_widget = QWidget()
-        self.central_widget.setStyleSheet("background-color: black;")
-
-        self.setCentralWidget(self.central_widget)
-
-        layout = QVBoxLayout(self.central_widget)
-
-        nav_layout = QHBoxLayout()
-        layout.addLayout(nav_layout)
-
-        self.buttons = []
-        button_labels = ["Home", "Sheet", "Note", "Map", "Data", "Bounty"]
-
-        for label in button_labels:
-            button = QPushButton(label)
-            button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
-            button.clicked.connect(lambda checked, label=label: self.button_func(label))
-            nav_layout.addWidget(button)
-            self.buttons.append(button)
-
-        self.stacked_widget = QStackedWidget()
-        layout.addWidget(self.stacked_widget)
-
-        self.pages = {
-            "Note": NotePage(),
-            "Map": MapPage(),
-            "Bounty": BountyPage(),
-            "Data": DataPage(),
-            "Sheet": StatsPage(),
-            "Home": MainPage(),
-        }
-
-        for page_name, page in self.pages.items():
-            self.stacked_widget.addWidget(page)
-
-        self.show_page("Home")
-        self.multi_update_button_color(self.buttons[0])
-
-    def multi_update_button_color(self, current_button):
-        for button in self.buttons:
-            if button == current_button:
-                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "green"))
-            else:
-                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
-
-    def button_func(self, page_name):
-        current_button = self.sender()
-        self.multi_update_button_color(current_button)
-
-        self.show_page(page_name)
-
-    def show_page(self, page_name):
-        index = list(self.pages.keys()).index(page_name)
-        self.stacked_widget.setCurrentIndex(index)
-
-    def closeEvent(self, event):
-        self.save_on_close()
-
-    def save_on_close(self):
-        message_box = QMessageBox()
-        message_box.setWindowTitle("Conferma")
-        message_box.setText("Vuoi salvare prima di chiudere?")
-        message_box.setIcon(QMessageBox.Question)
-        message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-
-        response = message_box.exec_()
-
-        if response == QMessageBox.Yes:  # Aggiungi qui altri saving
-            save_notes()
-            save_stats()
-            self.close()
-        elif response == QMessageBox.No:
-            self.close()
-</file>
-
-<file path="ttrpglib/stats_tab/traits_tab.py">
-import os
-import json
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QComboBox, QTextEdit
-from ttrpglib.utility.css_import import load_css
-
-
-class TraitsTable(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-        self.setStyleSheet(load_css("QWidget.css"))
-
-    def initUI(self):
-
-        global output_dir, trait_1, trait_2
-
-        output_dir = "data"
-
-        trait_1, trait_2 = load_traits()
-
-        layout1 = QVBoxLayout()
-        layout2 = QVBoxLayout()
-
-        self.descriptions = {
-            "Tratto": "",
-            "Alien DNA": "Ti sei sottoposto volontariamente ad un esperimento che combina DNA umano con quello alieno. Di conseguenza, hai più salute e sei più incline alle modifiche organiche del tuo corpo, ma gli oggetti di cura ed il cibo non sono molto efficaci su di te.",
-            "Dream House": "Sei il proprietario di una casa di lusso su un pianeta paradisiaco! Purtroppo però la casa è accompagnata da un mutuo di 125.000 crediti che deve essere pagato a rate mensili.",
-            "Kid Stuff": "I tuoi genitori sono vivi e vegeti e puoi andarli a trovare a casa loro. Ogni settimana, però, devi inviare il 2% dei tuoi guadagni a loro.",
-            "Spaced": "Il tuo corpo si è acclimatato allo spazio e alla microgravità. Sei più agile e scattante quando sei nello spazio, ma hai difficoltà sulla terra ferma. (Non può essere combinato con Terra Firma)",
-            "Terra Firma": "Non ti sei mai abituato allo spazio e alla microgravità. Sei più agile e scattante sulla terra ferma, ma hai difficoltà nello spazio. (Non può essere combinato con Spaced)",
-            "Wanted": "Qualcuno ha messo una taglia sulla tua testa e ormai la voce si è sparsa. Sei ricercato dai cacciatori di taglie, che potrebbero presentarti per catturarti, o peggio, ucciderti. Di conseguenza, sai bene come nasconderti per passare una notte sicura.",
-        }
-
-        # Primo layout
-        combo_traits1 = QComboBox()
-        combo_traits1.setStyleSheet(load_css("QComboBox.css"))
-        for key in self.descriptions.keys():
-            combo_traits1.addItem(key)
-
-        combo_traits1.currentTextChanged.connect(
-            lambda text: self.show_descr(text, descr_traits1)
-        )
-        combo_traits1.currentTextChanged.connect(
-            lambda temp_trait1=combo_traits1.currentText(): self.update_trait(
-                1, temp_trait1
-            )
-        )
-
-        descr_traits1 = QTextEdit()
-        descr_traits1.setStyleSheet(load_css("QTextEdit.css"))
-        descr_traits1.setReadOnly(True)
-
-        layout1.addWidget(combo_traits1)
-        layout1.addWidget(descr_traits1)
-
-        combo_traits1.setCurrentText(trait_1)
-        self.show_descr(trait_1, descr_traits1)
-
-        # Secondo layout
-        combo_traits2 = QComboBox()
-        combo_traits2.setStyleSheet(load_css("QComboBox.css"))
-
-        for key in self.descriptions.keys():
-            combo_traits2.addItem(key)
-
-        combo_traits2.currentTextChanged.connect(
-            lambda text: self.show_descr(text, descr_traits2)
-        )
-        combo_traits2.currentTextChanged.connect(
-            lambda temp_trait2=combo_traits2.currentText(): self.update_trait(
-                2, temp_trait2
-            )
-        )
-
-        descr_traits2 = QTextEdit()
-        descr_traits2.setStyleSheet(load_css("QTextEdit.css"))
-        descr_traits2.setReadOnly(True)
-
-        layout2.addWidget(combo_traits2)
-        layout2.addWidget(descr_traits2)
-
-        combo_traits2.setCurrentText(trait_2)
-        self.show_descr(trait_2, descr_traits2)
-
-        # Layout principale
-        main_layout = QVBoxLayout()
-        main_layout.addLayout(layout1)
-        main_layout.addLayout(layout2)
-
-        self.setLayout(main_layout)
-
-    def show_descr(self, text, textbox):
-        desc = self.descriptions.get(text, "Descrizione non trovata")
-        # Imposta il testo nella QTextEdit con la descrizione ottenuta
-        textbox.setText(desc)
-
-    def update_trait(self, index, new_trait):
-        global trait_1, trait_2
-        if index == 1:
-            trait_1 = new_trait
-        elif index == 2:
-            trait_2 = new_trait
-
-
-def save_traits():
-    output_file = os.path.join(output_dir, "traits.json")
-    traits = {"Trait 1": trait_1, "Trait 2": trait_2}
-
-    with open(output_file, "w") as f:
-        json.dump(traits, f, indent=4)
-
-
-def load_traits():
-    output_file = os.path.join(output_dir, "traits.json")
-    empty_traits = {"Trait 1": "null", "Trait 2": "null"}
-
-    try:
-        with open(output_file, "r") as f:
-
-            data = json.load(f)
-            trait_1 = data.get("Trait 1")
-            trait_2 = data.get("Trait 2")
-
-            return trait_1, trait_2
-    except FileNotFoundError:
-        return empty_traits
-</file>
-
 <file path="assets/style_css/QButton_data.css">
 /* Stile di base per QPushButton */
 QPushButton {
@@ -953,14 +725,7 @@ QListWidget::item:selected {
 </file>
 
 <file path="data/background.txt">
-
-</file>
-
-<file path="data/traits.json">
-{
-    "Trait 1": "Tratto",
-    "Trait 2": "Tratto"
-}
+pene duro
 </file>
 
 <file path="ttrpglib/database/celestial_database.py">
@@ -1086,6 +851,106 @@ class Database(QWidget):
         )
 </file>
 
+<file path="ttrpglib/multi_page_app.py">
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QHBoxLayout,
+    QStackedWidget,
+    QMessageBox,
+)
+from ttrpglib.note_page import NotePage
+from ttrpglib.map_page import MapPage
+from ttrpglib.bounty_page import BountyPage
+from ttrpglib.data_page import DataPage
+from ttrpglib.stats_page import StatsPage, save_stats
+from ttrpglib.main_page import MainPage
+from ttrpglib.utility.css_import import load_css_with_color
+
+
+class MultiPageApp(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Multi-Page App")
+        self.setStyleSheet("background-color: black;")
+
+        self.central_widget = QWidget()
+        self.central_widget.setStyleSheet("background-color: black;")
+
+        self.setCentralWidget(self.central_widget)
+
+        layout = QVBoxLayout(self.central_widget)
+
+        nav_layout = QHBoxLayout()
+        layout.addLayout(nav_layout)
+
+        self.buttons = []
+        button_labels = ["Home", "Sheet", "Note", "Map", "Data", "Bounty"]
+
+        for label in button_labels:
+            button = QPushButton(label)
+            button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
+            button.clicked.connect(lambda checked, label=label: self.button_func(label))
+            nav_layout.addWidget(button)
+            self.buttons.append(button)
+
+        self.stacked_widget = QStackedWidget()
+        layout.addWidget(self.stacked_widget)
+
+        self.pages = {
+            "Note": NotePage(),
+            "Map": MapPage(),
+            "Bounty": BountyPage(),
+            "Data": DataPage(),
+            "Sheet": StatsPage(),
+            "Home": MainPage(),
+        }
+
+        for page_name, page in self.pages.items():
+            self.stacked_widget.addWidget(page)
+
+        self.show_page("Home")
+        self.multi_update_button_color(self.buttons[0])
+
+    def multi_update_button_color(self, current_button):
+        for button in self.buttons:
+            if button == current_button:
+                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "green"))
+            else:
+                button.setStyleSheet(load_css_with_color("QButton_MultiPage.css", "black"))
+
+    def button_func(self, page_name):
+        current_button = self.sender()
+        self.multi_update_button_color(current_button)
+
+        self.show_page(page_name)
+
+    def show_page(self, page_name):
+        index = list(self.pages.keys()).index(page_name)
+        self.stacked_widget.setCurrentIndex(index)
+
+    def closeEvent(self, event):
+        message_box = QMessageBox()
+        message_box.setWindowTitle("Conferma")
+        message_box.setText("Vuoi salvare prima di chiudere?")
+        message_box.setIcon(QMessageBox.Question)
+        message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
+        response = message_box.exec_()
+
+        if response == QMessageBox.Yes:
+            self.pages["Note"].save_notes()
+            self.pages["Sheet"].save_background()
+            save_stats()
+            event.accept()
+        elif response == QMessageBox.No:
+            event.accept()
+        else:
+            event.ignore()
+</file>
+
 <file path="ttrpglib/note_page.py">
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTextEdit
 import os
@@ -1097,38 +962,27 @@ class NotePage(QWidget):
         super().__init__()
         self.setStyleSheet(load_css("QWidget.css"))
 
-        global output_dir, note
-
-        output_dir = "data"
+        self.output_dir = "data"
 
         layout = QVBoxLayout(self)
         self.note_text = QTextEdit()
-        self.note_text.textChanged.connect(self.update_notes)
         self.note_text.setStyleSheet(load_css("QTextEdit.css"))
         layout.addWidget(self.note_text)
 
-        note = load_notes()
-        self.note_text.setText(note)
+        self.note_text.setText(self.load_notes())
 
-    def update_notes(self):
-        global saved_note
-        saved_note = self.note_text.toPlainText()
+    def save_notes(self):
+        output_file = os.path.join(self.output_dir, "note.txt")
+        with open(output_file, "w") as file:
+            file.write(self.note_text.toPlainText())
 
-
-def save_notes():
-    output_file = os.path.join(output_dir, "note.txt")
-    with open(output_file, "w") as file:
-        file.write(saved_note)
-
-
-def load_notes():
-    output_file = os.path.join(output_dir, "note.txt")
-    try:
-        with open(output_file, "r") as file:
-            loaded_note = file.read()
-            return loaded_note
-    except FileNotFoundError:
-        return ""
+    def load_notes(self):
+        output_file = os.path.join(self.output_dir, "note.txt")
+        try:
+            with open(output_file, "r") as file:
+                return file.read()
+        except FileNotFoundError:
+            return ""
 </file>
 
 <file path="ttrpglib/stats_page.py">
@@ -1277,7 +1131,6 @@ class StatsPage(QWidget):
 
         # Definizione del QTextEdit
         self.background_text = QTextEdit()
-        self.background_text.textChanged.connect(self.update_background)
         self.background_text.setStyleSheet(
             "color: white; font-size: 12pt; width: 400px; height: 100px"
         )
@@ -1287,10 +1140,8 @@ class StatsPage(QWidget):
         layout_bottom.addWidget(background_label)
         layout_bottom.addWidget(self.background_text)
 
-        global output_dir, text
-        output_dir = "data"
-        text = load_background()
-        self.background_text.setText(text)
+        self.output_dir = "data"
+        self.background_text.setText(self.load_background())
 
         # ----------------------------------------------
         # Layout Main
@@ -1300,27 +1151,20 @@ class StatsPage(QWidget):
         layout_main.addLayout(layout_top)
         layout_main.addLayout(layout_bottom)
 
-    def update_background(self):
-        global saved_text
-        saved_text = self.background_text.toPlainText()
+    def save_background(self):
 
+        output_file = os.path.join(self.output_dir, "background.txt")
+        with open(output_file, "w") as file:
+            file.write(self.background_text.toPlainText())
 
-def save_background():
+    def load_background(self):
 
-    output_file = os.path.join(output_dir, "background.txt")
-    with open(output_file, "w") as file:
-        file.write(saved_text)
-
-
-def load_background():
-
-    output_file = os.path.join(output_dir, "background.txt")
-    try:
-        with open(output_file, "r") as file:
-            loaded_text = file.read()
-            return loaded_text
-    except FileNotFoundError:
-        return ""
+        output_file = os.path.join(self.output_dir, "background.txt")
+        try:
+            with open(output_file, "r") as file:
+                return file.read()
+        except FileNotFoundError:
+            return ""
 
 
 def save_stats():
@@ -1329,7 +1173,6 @@ def save_stats():
     save_inv()
     save_skills()
     save_traits()
-    save_background()
 </file>
 
 <file path="ttrpglib/stats_tab/attr_tab.py">
@@ -1642,14 +1485,14 @@ def load_inv():
     return money
 </file>
 
-<file path="ttrpglib/stats_tab/skills_tab.py">
+<file path="ttrpglib/stats_tab/traits_tab.py">
 import os
 import json
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QCheckBox
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QComboBox, QTextEdit
 from ttrpglib.utility.css_import import load_css
 
 
-class SkillTable(QWidget):
+class TraitsTable(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -1657,97 +1500,116 @@ class SkillTable(QWidget):
 
     def initUI(self):
 
-        global checkboxs_states, checkboxs, output_dir
+        global output_dir, trait_1, trait_2
 
         output_dir = "data"
 
-        checkboxs_states = load_skills()
-        checkboxs = [None for _ in range(25)]
+        trait_1, trait_2 = load_traits()
 
-        main_layout = QHBoxLayout()
+        layout1 = QVBoxLayout()
+        layout2 = QVBoxLayout()
 
-        skill_layout1 = QVBoxLayout()
-        skills1 = [
-            "Acrobatics",
-            "Alien",
-            "Athletics",
-            "Constitution",
-            "Diplomacy",
-            "Drive",
-            "Engineering",
-            "Gambling",
-            "Hacking",
-            "History",
-            "Insight",
-        ]
-        index = 0
-        for i, skill in enumerate(skills1):
-            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
-            checkbox.setStyleSheet(load_css("QCheckBox.css"))
-            checkbox.clicked.connect(lambda _, pos=i: self.update_checkbox(pos))
-            skill_layout1.addWidget(checkbox)
-            checkboxs[i] = checkbox
+        self.descriptions = {
+            "Tratto": "",
+            "Alien DNA": "Ti sei sottoposto volontariamente ad un esperimento che combina DNA umano con quello alieno. Di conseguenza, hai più salute e sei più incline alle modifiche organiche del tuo corpo, ma gli oggetti di cura ed il cibo non sono molto efficaci su di te.",
+            "Dream House": "Sei il proprietario di una casa di lusso su un pianeta paradisiaco! Purtroppo però la casa è accompagnata da un mutuo di 125.000 crediti che deve essere pagato a rate mensili.",
+            "Kid Stuff": "I tuoi genitori sono vivi e vegeti e puoi andarli a trovare a casa loro. Ogni settimana, però, devi inviare il 2% dei tuoi guadagni a loro.",
+            "Spaced": "Il tuo corpo si è acclimatato allo spazio e alla microgravità. Sei più agile e scattante quando sei nello spazio, ma hai difficoltà sulla terra ferma. (Non può essere combinato con Terra Firma)",
+            "Terra Firma": "Non ti sei mai abituato allo spazio e alla microgravità. Sei più agile e scattante sulla terra ferma, ma hai difficoltà nello spazio. (Non può essere combinato con Spaced)",
+            "Wanted": "Qualcuno ha messo una taglia sulla tua testa e ormai la voce si è sparsa. Sei ricercato dai cacciatori di taglie, che potrebbero presentarti per catturarti, o peggio, ucciderti. Di conseguenza, sai bene come nasconderti per passare una notte sicura.",
+        }
 
-            if checkboxs_states[i] is True:
-                checkboxs[i].setChecked(True)
-                # checkboxs[i].setStyleSheet(load_css("QCheckBox.css"))
-            index = i
+        # Primo layout
+        combo_traits1 = QComboBox()
+        combo_traits1.setStyleSheet(load_css("QComboBox.css"))
+        for key in self.descriptions.keys():
+            combo_traits1.addItem(key)
 
-        main_layout.addLayout(skill_layout1)
+        combo_traits1.currentTextChanged.connect(
+            lambda text: self.show_descr(text, descr_traits1)
+        )
+        combo_traits1.currentTextChanged.connect(
+            lambda temp_trait1=combo_traits1.currentText(): self.update_trait(
+                1, temp_trait1
+            )
+        )
 
-        # Layout per le skill group 2
-        skill_layout2 = QVBoxLayout()
-        skills2 = [
-            "Languages",
-            "Manipulation",
-            "Medic",
-            "Melee",
-            "Perception",
-            "Performance",
-            "Pilot",
-            "Religion",
-            "Science",
-            "Shooting",
-            "Sleight of Hand",
-            "Stealth",
-            "Survival",
-            "Tech",
-        ]
-        for j, skill in enumerate(skills2):
-            k = j + index + 1
-            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
-            checkbox.setStyleSheet(load_css("QCheckBox.css"))
-            checkbox.clicked.connect(lambda _, pos=k: self.update_checkbox(pos))
-            skill_layout2.addWidget(checkbox)
-            checkboxs[k] = checkbox
+        descr_traits1 = QTextEdit()
+        descr_traits1.setStyleSheet(load_css("QTextEdit.css"))
+        descr_traits1.setReadOnly(True)
 
-            if checkboxs_states[k] is True:
-                checkboxs[k].setChecked(True)
-                # checkboxs[k].setStyleSheet(load_css("QCheckBox.css"))
+        layout1.addWidget(combo_traits1)
+        layout1.addWidget(descr_traits1)
 
-        main_layout.addLayout(skill_layout2)
+        combo_traits1.setCurrentText(trait_1)
+        self.show_descr(trait_1, descr_traits1)
+
+        # Secondo layout
+        combo_traits2 = QComboBox()
+        combo_traits2.setStyleSheet(load_css("QComboBox.css"))
+
+        for key in self.descriptions.keys():
+            combo_traits2.addItem(key)
+
+        combo_traits2.currentTextChanged.connect(
+            lambda text: self.show_descr(text, descr_traits2)
+        )
+        combo_traits2.currentTextChanged.connect(
+            lambda temp_trait2=combo_traits2.currentText(): self.update_trait(
+                2, temp_trait2
+            )
+        )
+
+        descr_traits2 = QTextEdit()
+        descr_traits2.setStyleSheet(load_css("QTextEdit.css"))
+        descr_traits2.setReadOnly(True)
+
+        layout2.addWidget(combo_traits2)
+        layout2.addWidget(descr_traits2)
+
+        combo_traits2.setCurrentText(trait_2)
+        self.show_descr(trait_2, descr_traits2)
+
+        # Layout principale
+        main_layout = QVBoxLayout()
+        main_layout.addLayout(layout1)
+        main_layout.addLayout(layout2)
 
         self.setLayout(main_layout)
 
-    def update_checkbox(self, pos):
-        global checkboxs_states
-        checkboxs_states[pos] = not checkboxs_states[pos]
+    def show_descr(self, text, textbox):
+        desc = self.descriptions.get(text, "Descrizione non trovata")
+        # Imposta il testo nella QTextEdit con la descrizione ottenuta
+        textbox.setText(desc)
+
+    def update_trait(self, index, new_trait):
+        global trait_1, trait_2
+        if index == 1:
+            trait_1 = new_trait
+        elif index == 2:
+            trait_2 = new_trait
 
 
-def save_skills():
-    output_file = os.path.join(output_dir, "skills.json")
+def save_traits():
+    output_file = os.path.join(output_dir, "traits.json")
+    traits = {"Trait 1": trait_1, "Trait 2": trait_2}
+
     with open(output_file, "w") as f:
-        json.dump(checkboxs_states, f)
+        json.dump(traits, f, indent=4)
 
 
-def load_skills():
-    output_file = os.path.join(output_dir, "skills.json")
+def load_traits():
+    output_file = os.path.join(output_dir, "traits.json")
+
     try:
         with open(output_file, "r") as f:
             data = json.load(f)
-            return data
+            trait_1 = data.get("Trait 1", "Tratto")
+            trait_2 = data.get("Trait 2", "Tratto")
+
+            return trait_1, trait_2
     except FileNotFoundError:
-        return [False for _ in range(25)]
+        return "Tratto", "Tratto"
 </file>
 
 <file path="ttrpglib/utility/css_import.py">
@@ -1765,14 +1627,6 @@ def load_css(file_name):
 def load_css_with_color(file_name, background_color):
     css = load_css(file_name)
     return css + f"\nQPushButton {{ background-color: {background_color}; }}"
-</file>
-
-<file path="data/note.txt">
-alkakdlkdld
-</file>
-
-<file path="data/skills.json">
-[false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
 </file>
 
 <file path="ttrpglib/data_page.py">
@@ -1823,6 +1677,21 @@ class DataPage(QWidget):
 
 
 # finire stile QTableWidget e box quando carichi o rimuovi
+</file>
+
+<file path="data/note.txt">
+alkakdlkdld    fvgdxfb   fffff palle
+</file>
+
+<file path="data/skills.json">
+[false, true, false, false, false, false, true, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+</file>
+
+<file path="data/traits.json">
+{
+    "Trait 1": "Spaced",
+    "Trait 2": "Spaced"
+}
 </file>
 
 <file path="README.md">
@@ -1881,8 +1750,114 @@ This program was developed by Rasalas18.
 This project is distributed under the MIT license. Refer to the LICENSE file for further details.
 </file>
 
+<file path="ttrpglib/stats_tab/skills_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QCheckBox
+from ttrpglib.utility.css_import import load_css
+
+
+class SkillTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+    def initUI(self):
+
+        global checkboxes_states, checkboxes, output_dir
+
+        output_dir = "data"
+
+        checkboxes_states = load_skills()
+        checkboxes = [None for _ in range(25)]
+
+        main_layout = QHBoxLayout()
+
+        skill_layout1 = QVBoxLayout()
+        skills1 = [
+            "Acrobatics",
+            "Alien",
+            "Athletics",
+            "Constitution",
+            "Diplomacy",
+            "Drive",
+            "Engineering",
+            "Gambling",
+            "Hacking",
+            "History",
+            "Insight",
+        ]
+        for i, skill in enumerate(skills1):
+            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
+            checkbox.setStyleSheet(load_css("QCheckBox.css"))
+            checkbox.clicked.connect(lambda _, pos=i: self.update_checkbox(pos))
+            skill_layout1.addWidget(checkbox)
+            checkboxes[i] = checkbox
+
+            if checkboxes_states[i] is True:
+                checkboxes[i].setChecked(True)
+                # checkboxes[i].setStyleSheet(load_css("QCheckBox.css"))
+
+        main_layout.addLayout(skill_layout1)
+
+        # Layout per le skill group 2
+        skill_layout2 = QVBoxLayout()
+        skills2 = [
+            "Languages",
+            "Manipulation",
+            "Medic",
+            "Melee",
+            "Perception",
+            "Performance",
+            "Pilot",
+            "Religion",
+            "Science",
+            "Shooting",
+            "Sleight of Hand",
+            "Stealth",
+            "Survival",
+            "Tech",
+        ]
+        for j, skill in enumerate(skills2):
+            k = j + len(skills1)
+            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
+            checkbox.setStyleSheet(load_css("QCheckBox.css"))
+            checkbox.clicked.connect(lambda _, pos=k: self.update_checkbox(pos))
+            skill_layout2.addWidget(checkbox)
+            checkboxes[k] = checkbox
+
+            if checkboxes_states[k] is True:
+                checkboxes[k].setChecked(True)
+                # checkboxes[k].setStyleSheet(load_css("QCheckBox.css"))
+
+        main_layout.addLayout(skill_layout2)
+
+        self.setLayout(main_layout)
+
+    def update_checkbox(self, pos):
+        global checkboxes_states
+        checkboxes_states[pos] = not checkboxes_states[pos]
+
+
+def save_skills():
+    output_file = os.path.join(output_dir, "skills.json")
+    with open(output_file, "w") as f:
+        json.dump(checkboxes_states, f)
+
+
+def load_skills():
+    output_file = os.path.join(output_dir, "skills.json")
+    try:
+        with open(output_file, "r") as f:
+            data = json.load(f)
+            return data
+    except FileNotFoundError:
+        return [False for _ in range(25)]
+</file>
+
 <file path="data/attr.json">
-{"attributes": [[true, true, false, false, false, false], [false, false, false, false, false, false], [false, false, false, false, false, false], [false, false, false, false, false, false]]}
+{"attributes": [[true, true, true, true, false, false], [true, true, false, false, false, false], [false, false, false, false, true, false], [false, false, false, false, false, false]]}
 </file>
 
 <file path="main.py">
