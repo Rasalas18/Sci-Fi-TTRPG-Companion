@@ -36,8 +36,7 @@ class AttrTable(QWidget):
         attr_values = ["-2", "-1", "0", "1", "2", "3"]
 
         # Aggiungi 4 frame allineati verticalmente
-        for text in label_texts:
-            i = label_texts.index(text)
+        for i, text in enumerate(label_texts):
 
             frame = QFrame(self)
 
@@ -47,8 +46,7 @@ class AttrTable(QWidget):
             button_layout = QHBoxLayout()
             button_layout.addWidget(attr_label)
 
-            for value in attr_values:
-                j = attr_values.index(value)
+            for j, value in enumerate(attr_values):
                 button = QPushButton(f"{value}", self)
                 button.clicked.connect(
                     lambda _, row=i, col=j: self.attr_button_click(row, col)
@@ -63,7 +61,6 @@ class AttrTable(QWidget):
             attr_layout.addWidget(frame)
 
         self.setLayout(attr_layout)
-        self.setWindowTitle("QtWidget con Frames e Pulsanti")
 
     def attr_button_click(self, row, col):
         global button_state

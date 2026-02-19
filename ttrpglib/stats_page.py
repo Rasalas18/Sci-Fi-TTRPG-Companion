@@ -67,7 +67,7 @@ class StatsPage(QWidget):
         pixmap = QPixmap("assets/icons/pc_icon.jpg")
 
         # Ridimensiono l'immagine a 400x400 mantenendo l'aspect ratio
-        scaled_pixmap = pixmap.scaled(400, 400, aspectRatioMode=True)
+        scaled_pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatio)
         image_label.setPixmap(scaled_pixmap)
         image_layout.addWidget(image_label)
         # ----------------------------------------------

@@ -1,5 +1,5 @@
 import os
-import pickle
+import json
 from PyQt5.QtWidgets import (
     QWidget,
     QVBoxLayout,
@@ -190,23 +190,24 @@ inventory = {}
 
 def save_inv():
     global output_dir, inventory, money
-    output_file = os.path.join(output_dir, "inv.pickle")
+    output_file = os.path.join(output_dir, "inv.json")
     data_to_save = {
         "inventory": inventory,
         "money": money,  # Salva anche il valore del denaro
     }
-    with open(output_file, "wb") as f:
-        pickle.dump(data_to_save, f)
+    with open(output_file, "w") as f:
+        json.dump(data_to_save, f, indent=4)
 
 
 def load_inv():
     global output_dir, inventory, money
-    output_file = os.path.join(output_dir, "inv.pickle")
+    output_file = os.path.join(output_dir, "inv.json")
     try:
-        with open(output_file, "rb") as f:
-            data = pickle.load(f)
-            inventory = data["inventory"]
+        with open(output_file, "r") as f:
+            data = json.load(f)
+            inventory = data.get("inventory", {})
             money = data.get("money", 0)  # Imposta il valore del denaro, se presente
     except FileNotFoundError:
+        inventory = {}
         return 0
     return money
