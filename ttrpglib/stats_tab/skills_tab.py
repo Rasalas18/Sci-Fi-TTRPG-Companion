@@ -12,12 +12,12 @@ class SkillTable(QWidget):
 
     def initUI(self):
 
-        global checkboxs_states, checkboxs, output_dir
+        global checkboxes_states, checkboxes, output_dir
 
         output_dir = "data"
 
-        checkboxs_states = load_skills()
-        checkboxs = [None for _ in range(25)]
+        checkboxes_states = load_skills()
+        checkboxes = [None for _ in range(25)]
 
         main_layout = QHBoxLayout()
 
@@ -41,11 +41,11 @@ class SkillTable(QWidget):
             checkbox.setStyleSheet(load_css("QCheckBox.css"))
             checkbox.clicked.connect(lambda _, pos=i: self.update_checkbox(pos))
             skill_layout1.addWidget(checkbox)
-            checkboxs[i] = checkbox
+            checkboxes[i] = checkbox
 
-            if checkboxs_states[i] is True:
-                checkboxs[i].setChecked(True)
-                # checkboxs[i].setStyleSheet(load_css("QCheckBox.css"))
+            if checkboxes_states[i] is True:
+                checkboxes[i].setChecked(True)
+                # checkboxes[i].setStyleSheet(load_css("QCheckBox.css"))
             index = i
 
         main_layout.addLayout(skill_layout1)
@@ -74,25 +74,25 @@ class SkillTable(QWidget):
             checkbox.setStyleSheet(load_css("QCheckBox.css"))
             checkbox.clicked.connect(lambda _, pos=k: self.update_checkbox(pos))
             skill_layout2.addWidget(checkbox)
-            checkboxs[k] = checkbox
+            checkboxes[k] = checkbox
 
-            if checkboxs_states[k] is True:
-                checkboxs[k].setChecked(True)
-                # checkboxs[k].setStyleSheet(load_css("QCheckBox.css"))
+            if checkboxes_states[k] is True:
+                checkboxes[k].setChecked(True)
+                # checkboxes[k].setStyleSheet(load_css("QCheckBox.css"))
 
         main_layout.addLayout(skill_layout2)
 
         self.setLayout(main_layout)
 
     def update_checkbox(self, pos):
-        global checkboxs_states
-        checkboxs_states[pos] = not checkboxs_states[pos]
+        global checkboxes_states
+        checkboxes_states[pos] = not checkboxes_states[pos]
 
 
 def save_skills():
     output_file = os.path.join(output_dir, "skills.json")
     with open(output_file, "w") as f:
-        json.dump(checkboxs_states, f)
+        json.dump(checkboxes_states, f)
 
 
 def load_skills():

@@ -112,15 +112,13 @@ def save_traits():
 
 def load_traits():
     output_file = os.path.join(output_dir, "traits.json")
-    empty_traits = {"Trait 1": "null", "Trait 2": "null"}
 
     try:
         with open(output_file, "r") as f:
-
             data = json.load(f)
-            trait_1 = data.get("Trait 1")
-            trait_2 = data.get("Trait 2")
+            trait_1 = data.get("Trait 1", "Tratto")
+            trait_2 = data.get("Trait 2", "Tratto")
 
             return trait_1, trait_2
     except FileNotFoundError:
-        return empty_traits
+        return "Tratto", "Tratto"
