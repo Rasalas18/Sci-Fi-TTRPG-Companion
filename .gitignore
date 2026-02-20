@@ -168,3 +168,4 @@ export/
 **.pyc
 data/credentials.json
 z_Report
+repomix-output.xml
