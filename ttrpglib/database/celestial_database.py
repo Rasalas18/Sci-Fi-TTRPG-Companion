@@ -118,3 +118,6 @@ class Database(QWidget):
             "Successo",
             f"Duplicati di {self.celestial_body.capitalize()} rimossi con successo!",
         )
+
+    def close_connection(self):
+        self.conn.close()

@@ -94,8 +94,12 @@ class MultiPageApp(QMainWindow):
             stats_page.traits_interface.save_traits()
             stats_page.save_background()
             self.pages["Note"].save_notes()
+            for db in self.pages["Data"].databases:
+                db.close_connection()
             event.accept()
         elif response == QMessageBox.No:
+            for db in self.pages["Data"].databases:
+                db.close_connection()
             event.accept()
         else:
             event.ignore()
