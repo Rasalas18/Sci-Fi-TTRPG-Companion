@@ -17,7 +17,7 @@ from ttrpglib.stats_page import StatsPage
 from ttrpglib.main_page import MainPage
 from ttrpglib.utility.css_import import load_css_with_color
 
-AUTOSAVE_INTERVAL = 5 * 1 * 1000
+AUTOSAVE_INTERVAL = 5 * 60 * 1000
 
 
 class MultiPageApp(QMainWindow):
