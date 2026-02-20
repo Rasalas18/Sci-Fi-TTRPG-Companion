@@ -166,3 +166,4 @@ assets/font/
 assets/icon/
 export/
 **.pyc
+data/credentials.json

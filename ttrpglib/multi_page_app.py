@@ -11,7 +11,7 @@ from ttrpglib.note_page import NotePage
 from ttrpglib.map_page import MapPage
 from ttrpglib.bounty_page import BountyPage
 from ttrpglib.data_page import DataPage
-from ttrpglib.stats_page import StatsPage, save_stats
+from ttrpglib.stats_page import StatsPage
 from ttrpglib.main_page import MainPage
 from ttrpglib.utility.css_import import load_css_with_color
 
@@ -87,9 +87,13 @@ class MultiPageApp(QMainWindow):
         response = message_box.exec_()
 
         if response == QMessageBox.Yes:
+            stats_page = self.pages["Sheet"]
+            stats_page.attr_interface.save_attr()
+            stats_page.inventory_interface.save_inv()
+            stats_page.skill_interface.save_skills()
+            stats_page.traits_interface.save_traits()
+            stats_page.save_background()
             self.pages["Note"].save_notes()
-            self.pages["Sheet"].save_background()
-            save_stats()
             event.accept()
         elif response == QMessageBox.No:
             event.accept()

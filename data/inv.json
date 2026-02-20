@@ -2,7 +2,8 @@
     "inventory": {
         "Pene": 9,
         "Penino": 10,
-        "cazzi": 10
+        "cazzi": 10,
+        "pennacchio": 20
     },
-    "money": 300
+    "money": 600
 }

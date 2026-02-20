@@ -1,10 +1,8 @@
+import os
+import json
 from PyQt5.QtWidgets import (
-    QMainWindow,
-    QWidget,
-    QVBoxLayout,
-    QLineEdit,
-    QLabel,
-    QMessageBox,
+    QMainWindow, QWidget, QVBoxLayout,
+    QLineEdit, QLabel, QMessageBox,
 )
 from PyQt5.QtGui import QFont
 
@@ -12,15 +10,13 @@ from PyQt5.QtGui import QFont
 class LoginPage(QMainWindow):
     def __init__(self, login_success):
         super().__init__()
-
         self.setWindowTitle("Login")
         self.setStyleSheet("background-color: black; color: green;")
-
         self.login_success = login_success
+        self.credentials = self.load_credentials()
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-
         layout = QVBoxLayout(central_widget)
 
         self.label_username = QLabel("Username:")
@@ -44,19 +40,24 @@ class LoginPage(QMainWindow):
 
         self.password_entry.returnPressed.connect(self.login)
 
+    def load_credentials(self):
+        credentials_file = os.path.join("data", "credentials.json")
+        try:
+            with open(credentials_file, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            QMessageBox.critical(
+                None,
+                "Errore",
+                "File credenziali non trovato."
+            )
+            return {}
+
     def login(self):
         username = self.username_entry.text()
         password = self.password_entry.text()
 
-        credentials = {  # Credenziali Corrette
-            "admin": "password",
-            "Dave": "Rivera",
-            "Jordan": "Alken",
-            "Sydney": "Gulsvig",
-            "Tavish": "Stasny",
-        }
-
-        if username in credentials and password == credentials[username]:
+        if username in self.credentials and password == self.credentials[username]:
             self.login_success()
             self.close()
         else:

@@ -10,10 +10,10 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
-from ttrpglib.stats_tab.attr_tab import AttrTable, save_attr
-from ttrpglib.stats_tab.inv_tab import InventoryTable, save_inv
-from ttrpglib.stats_tab.skills_tab import SkillTable, save_skills
-from ttrpglib.stats_tab.traits_tab import TraitsTable, save_traits
+from ttrpglib.stats_tab.attr_tab import AttrTable
+from ttrpglib.stats_tab.inv_tab import InventoryTable
+from ttrpglib.stats_tab.skills_tab import SkillTable
+from ttrpglib.stats_tab.traits_tab import TraitsTable
 from ttrpglib.utility.css_import import load_css
 
 
@@ -177,11 +177,3 @@ class StatsPage(QWidget):
                 return file.read()
         except FileNotFoundError:
             return ""
-
-
-def save_stats():
-
-    save_attr()
-    save_inv()
-    save_skills()
-    save_traits()

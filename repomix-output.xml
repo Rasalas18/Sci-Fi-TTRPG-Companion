@@ -487,17 +487,6 @@ INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazion
 INSERT INTO Stazione (name, type, position, properties, system) VALUES ('Stazione 10', 'Stazione', 'Centrale', 'Alleanza', 'White Sun');
 </file>
 
-<file path="data/inv.json">
-{
-    "inventory": {
-        "Pene": 9,
-        "Penino": 10,
-        "cazzi": 10
-    },
-    "money": 300
-}
-</file>
-
 <file path="LICENSE.txt">
 MIT License
 
@@ -568,13 +557,11 @@ class BountyPage(QWidget):
 </file>
 
 <file path="ttrpglib/login_page.py">
+import os
+import json
 from PyQt5.QtWidgets import (
-    QMainWindow,
-    QWidget,
-    QVBoxLayout,
-    QLineEdit,
-    QLabel,
-    QMessageBox,
+    QMainWindow, QWidget, QVBoxLayout,
+    QLineEdit, QLabel, QMessageBox,
 )
 from PyQt5.QtGui import QFont
 
@@ -582,15 +569,13 @@ from PyQt5.QtGui import QFont
 class LoginPage(QMainWindow):
     def __init__(self, login_success):
         super().__init__()
-
         self.setWindowTitle("Login")
         self.setStyleSheet("background-color: black; color: green;")
-
         self.login_success = login_success
+        self.credentials = self.load_credentials()
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-
         layout = QVBoxLayout(central_widget)
 
         self.label_username = QLabel("Username:")
@@ -614,19 +599,24 @@ class LoginPage(QMainWindow):
 
         self.password_entry.returnPressed.connect(self.login)
 
+    def load_credentials(self):
+        credentials_file = os.path.join("data", "credentials.json")
+        try:
+            with open(credentials_file, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            QMessageBox.critical(
+                None,
+                "Errore",
+                "File credenziali non trovato."
+            )
+            return {}
+
     def login(self):
         username = self.username_entry.text()
         password = self.password_entry.text()
 
-        credentials = {  # Credenziali Corrette
-            "admin": "password",
-            "Dave": "Rivera",
-            "Jordan": "Alken",
-            "Sydney": "Gulsvig",
-            "Tavish": "Stasny",
-        }
-
-        if username in credentials and password == credentials[username]:
+        if username in self.credentials and password == self.credentials[username]:
             self.login_success()
             self.close()
         else:
@@ -667,6 +657,18 @@ class MapPage(QWidget):
         label = QLabel("Pagina della Mappa", alignment=Qt.AlignCenter)
         label.setStyleSheet("color: green; font-size: 24px;")
         layout.addWidget(label)
+</file>
+
+<file path="data/inv.json">
+{
+    "inventory": {
+        "Pene": 9,
+        "Penino": 10,
+        "cazzi": 10,
+        "pennacchio": 20
+    },
+    "money": 600
+}
 </file>
 
 <file path="requirements.txt">
@@ -722,10 +724,6 @@ QListWidget::item:selected {
   background-color: green; /* Colore di sfondo selezionato */
   color: white; /* Colore del testo selezionato */
 }
-</file>
-
-<file path="data/background.txt">
-pene duro
 </file>
 
 <file path="ttrpglib/database/celestial_database.py">
@@ -851,6 +849,438 @@ class Database(QWidget):
         )
 </file>
 
+<file path="ttrpglib/stats_tab/attr_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import (
+    QWidget, QHBoxLayout, QVBoxLayout, QFrame, QLabel, QPushButton,
+)
+from PyQt5.QtCore import QSize
+from ttrpglib.utility.css_import import load_css, load_css_with_color
+
+
+class AttrTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.output_dir = "data"
+        self.button_state = self.load_attr()
+        self.buttons = [[None for _ in range(6)] for _ in range(4)]
+        self.initUI()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+    def initUI(self):
+        attr_layout = QVBoxLayout()
+        attr_layout.setContentsMargins(40, 0, 40, 0)
+        attr_layout.setSpacing(30)
+
+        label_texts = ["Strength", "Agility", "Intelligence", "Willpower"]
+        attr_values = ["-2", "-1", "0", "1", "2", "3"]
+
+        for i, text in enumerate(label_texts):
+            frame = QFrame(self)
+            attr_label = QLabel(text, self)
+            attr_label.setStyleSheet("color: white; font-size: 12pt")
+
+            button_layout = QHBoxLayout()
+            button_layout.addWidget(attr_label)
+
+            for j, value in enumerate(attr_values):
+                button = QPushButton(f"{value}", self)
+                button.clicked.connect(
+                    lambda _, row=i, col=j: self.attr_button_click(row, col)
+                )
+                button.setFixedSize(QSize(50, 50))
+                button_layout.addWidget(button)
+                self.buttons[i][j] = button
+                self.attr_update_button_color(button, i, j)
+
+            frame.setLayout(button_layout)
+            attr_layout.addWidget(frame)
+
+        self.setLayout(attr_layout)
+
+    def attr_button_click(self, row, col):
+        self.button_state[row][col] = not self.button_state[row][col]
+        self.attr_update_button_color(self.buttons[row][col], row, col)
+
+    def attr_update_button_color(self, button, row, col):
+        if self.button_state[row][col]:
+            button.setStyleSheet(load_css_with_color("QButton_attr.css", "green"))
+        else:
+            button.setStyleSheet(load_css_with_color("QButton_attr.css", "black"))
+
+    def save_attr(self):
+        output_file = os.path.join(self.output_dir, "attr.json")
+        with open(output_file, "w") as f:
+            json.dump({"attributes": self.button_state}, f)
+
+    def load_attr(self):
+        output_file = os.path.join(self.output_dir, "attr.json")
+        try:
+            with open(output_file, "r") as f:
+                data = json.load(f)
+                return data["attributes"]
+        except FileNotFoundError:
+            return [[False for _ in range(6)] for _ in range(4)]
+</file>
+
+<file path="ttrpglib/stats_tab/inv_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
+    QLabel, QLineEdit, QTextEdit, QMessageBox,
+)
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class InventoryTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.output_dir = "data"
+        self.inventory = {}
+        self.money = 0
+        self.setStyleSheet("background-color: black;")
+        self.load_inv()
+        self.setup_ui()
+        self.show_inv()
+
+    def setup_ui(self):
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        inv_layout = QHBoxLayout()
+
+        self.obj_label = QLabel("Oggetto:")
+        self.obj_label.setStyleSheet("color: white; font-size: 10pt")
+        self.obj_entry = QLineEdit()
+        self.obj_entry.setStyleSheet("color: white; border: 1px solid white")
+
+        self.quantity_label = QLabel("Quantità:")
+        self.quantity_label.setStyleSheet("color: white; font-size: 10pt")
+        self.quantity_entry = QLineEdit()
+        self.quantity_entry.setStyleSheet("color: white; border: 1px solid white")
+        self.quantity_entry.setFixedWidth(30)
+
+        self.add_button = QPushButton("Aggiungi")
+        self.add_button.clicked.connect(self.add_object)
+        self.add_button.setStyleSheet(load_css("QButton_inv.css"))
+
+        self.remove_button = QPushButton("Rimuovi")
+        self.remove_button.clicked.connect(self.remove_object)
+        self.remove_button.setStyleSheet(load_css("QButton_inv.css"))
+
+        inv_layout.addWidget(self.obj_label)
+        inv_layout.addWidget(self.obj_entry)
+        inv_layout.addWidget(self.quantity_label)
+        inv_layout.addWidget(self.quantity_entry)
+        inv_layout.addWidget(self.add_button)
+        inv_layout.addWidget(self.remove_button)
+        self.layout.addLayout(inv_layout)
+
+        self.inv_label = QLabel("Inventario:")
+        self.inv_label.setStyleSheet("color: white; font-size: 10pt")
+        self.inv_text = QTextEdit()
+        self.inv_text.setStyleSheet("color: white; border: 1px solid white; font-size: 10pt")
+        self.inv_text.setReadOnly(True)
+
+        self.layout.addWidget(self.inv_label)
+        self.layout.addWidget(self.inv_text)
+
+        self.money_label = QLabel(f"Money: {self.money}")
+        self.money_label.setStyleSheet("color: white; font-size: 10pt")
+        self.money_label.setAlignment(Qt.AlignCenter)
+
+        self.remove_1 = QPushButton("-1")
+        self.remove_1.clicked.connect(lambda: self.update_money(-1))
+        self.remove_1.setStyleSheet(load_css("QButton_removeMoney.css"))
+
+        self.remove_10 = QPushButton("-10")
+        self.remove_10.clicked.connect(lambda: self.update_money(-10))
+        self.remove_10.setStyleSheet(load_css("QButton_removeMoney.css"))
+
+        self.remove_100 = QPushButton("-100")
+        self.remove_100.clicked.connect(lambda: self.update_money(-100))
+        self.remove_100.setStyleSheet(load_css("QButton_removeMoney.css"))
+
+        self.add_1 = QPushButton("+1")
+        self.add_1.clicked.connect(lambda: self.update_money(1))
+        self.add_1.setStyleSheet(load_css("QButton_addMoney.css"))
+
+        self.add_10 = QPushButton("+10")
+        self.add_10.clicked.connect(lambda: self.update_money(10))
+        self.add_10.setStyleSheet(load_css("QButton_addMoney.css"))
+
+        self.add_100 = QPushButton("+100")
+        self.add_100.clicked.connect(lambda: self.update_money(100))
+        self.add_100.setStyleSheet(load_css("QButton_addMoney.css"))
+
+        left_bottom = QHBoxLayout()
+        left_bottom.addWidget(self.remove_1)
+        left_bottom.addWidget(self.remove_10)
+        left_bottom.addWidget(self.remove_100)
+
+        middle_bottom = QHBoxLayout()
+        middle_bottom.addWidget(self.money_label)
+
+        right_bottom = QHBoxLayout()
+        right_bottom.addWidget(self.add_100)
+        right_bottom.addWidget(self.add_10)
+        right_bottom.addWidget(self.add_1)
+
+        buttons_layout = QHBoxLayout()
+        buttons_layout.addLayout(left_bottom)
+        buttons_layout.addLayout(middle_bottom)
+        buttons_layout.addLayout(right_bottom)
+        self.layout.addLayout(buttons_layout)
+
+    def update_money(self, amount):
+        self.money += amount
+        self.money_label.setText(f"Money: {self.money}")
+
+    def add_object(self):
+        obj = self.obj_entry.text()
+        quantity_str = self.quantity_entry.text()
+        if not quantity_str.isdigit():
+            QMessageBox.critical(None, "Errore", "Inserisci una quantità valida.")
+            return
+        quantity_int = int(quantity_str)
+        if obj in self.inventory:
+            self.inventory[obj] += quantity_int
+        else:
+            self.inventory[obj] = quantity_int
+        self.show_inv()
+
+    def remove_object(self):
+        obj = self.obj_entry.text()
+        quantity_str = self.quantity_entry.text()
+        if not quantity_str.isdigit():
+            QMessageBox.critical(None, "Errore", "Inserisci una quantità valida.")
+            return
+        quantity_int = int(quantity_str)
+        if obj in self.inventory:
+            if self.inventory[obj] >= quantity_int:
+                self.inventory[obj] -= quantity_int
+                if self.inventory[obj] == 0:
+                    del self.inventory[obj]
+            else:
+                QMessageBox.critical(None, "Errore", "La quantità specificata è maggiore della quantità presente nell'inventario.")
+        else:
+            QMessageBox.critical(None, "Errore", "L'obj specificato non è presente nell'inventario.")
+        self.show_inv()
+
+    def show_inv(self):
+        inv_text = ""
+        for obj, quantity in self.inventory.items():
+            inv_text += f"{obj}: {quantity}\n"
+        self.inv_text.setPlainText(inv_text)
+        self.obj_entry.clear()
+        self.quantity_entry.clear()
+
+    def save_inv(self):
+        output_file = os.path.join(self.output_dir, "inv.json")
+        with open(output_file, "w") as f:
+            json.dump({"inventory": self.inventory, "money": self.money}, f, indent=4)
+
+    def load_inv(self):
+        output_file = os.path.join(self.output_dir, "inv.json")
+        try:
+            with open(output_file, "r") as f:
+                data = json.load(f)
+                self.inventory = data.get("inventory", {})
+                self.money = data.get("money", 0)
+        except FileNotFoundError:
+            self.inventory = {}
+            self.money = 0
+</file>
+
+<file path="ttrpglib/stats_tab/traits_tab.py">
+import os
+import json
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QComboBox, QTextEdit
+from ttrpglib.utility.css_import import load_css
+
+
+class TraitsTable(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.output_dir = "data"
+        self.trait_1 = "Tratto"
+        self.trait_2 = "Tratto"
+        self.initUI()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+    def initUI(self):
+        self.trait_1, self.trait_2 = self.load_traits()
+
+        self.descriptions = {
+            "Tratto": "",
+            "Alien DNA": "Ti sei sottoposto volontariamente ad un esperimento che combina DNA umano con quello alieno. Di conseguenza, hai più salute e sei più incline alle modifiche organiche del tuo corpo, ma gli oggetti di cura ed il cibo non sono molto efficaci su di te.",
+            "Dream House": "Sei il proprietario di una casa di lusso su un pianeta paradisiaco! Purtroppo però la casa è accompagnata da un mutuo di 125.000 crediti che deve essere pagato a rate mensili.",
+            "Kid Stuff": "I tuoi genitori sono vivi e vegeti e puoi andarli a trovare a casa loro. Ogni settimana, però, devi inviare il 2% dei tuoi guadagni a loro.",
+            "Spaced": "Il tuo corpo si è acclimatato allo spazio e alla microgravità. Sei più agile e scattante quando sei nello spazio, ma hai difficoltà sulla terra ferma. (Non può essere combinato con Terra Firma)",
+            "Terra Firma": "Non ti sei mai abituato allo spazio e alla microgravità. Sei più agile e scattante sulla terra ferma, ma hai difficoltà nello spazio. (Non può essere combinato con Spaced)",
+            "Wanted": "Qualcuno ha messo una taglia sulla tua testa e ormai la voce si è sparsa. Sei ricercato dai cacciatori di taglie, che potrebbero presentarti per catturarti, o peggio, ucciderti. Di conseguenza, sai bene come nasconderti per passare una notte sicura.",
+        }
+
+        layout1 = QVBoxLayout()
+        layout2 = QVBoxLayout()
+
+        # Primo layout
+        combo_traits1 = QComboBox()
+        combo_traits1.setStyleSheet(load_css("QComboBox.css"))
+        for key in self.descriptions.keys():
+            combo_traits1.addItem(key)
+
+        combo_traits1.currentTextChanged.connect(
+            lambda text: self.show_descr(text, descr_traits1)
+        )
+        combo_traits1.currentTextChanged.connect(
+            lambda text: self.update_trait(1, text)
+        )
+
+        descr_traits1 = QTextEdit()
+        descr_traits1.setStyleSheet(load_css("QTextEdit.css"))
+        descr_traits1.setReadOnly(True)
+
+        layout1.addWidget(combo_traits1)
+        layout1.addWidget(descr_traits1)
+
+        combo_traits1.setCurrentText(self.trait_1)
+        self.show_descr(self.trait_1, descr_traits1)
+
+        # Secondo layout
+        combo_traits2 = QComboBox()
+        combo_traits2.setStyleSheet(load_css("QComboBox.css"))
+
+        for key in self.descriptions.keys():
+            combo_traits2.addItem(key)
+
+        combo_traits2.currentTextChanged.connect(
+            lambda text: self.show_descr(text, descr_traits2)
+        )
+        combo_traits2.currentTextChanged.connect(
+            lambda text: self.update_trait(2, text)
+        )
+
+        descr_traits2 = QTextEdit()
+        descr_traits2.setStyleSheet(load_css("QTextEdit.css"))
+        descr_traits2.setReadOnly(True)
+
+        layout2.addWidget(combo_traits2)
+        layout2.addWidget(descr_traits2)
+
+        combo_traits2.setCurrentText(self.trait_2)
+        self.show_descr(self.trait_2, descr_traits2)
+
+        # Layout principale
+        main_layout = QVBoxLayout()
+        main_layout.addLayout(layout1)
+        main_layout.addLayout(layout2)
+
+        self.setLayout(main_layout)
+
+    def show_descr(self, text, textbox):
+        desc = self.descriptions.get(text, "Descrizione non trovata")
+        # Imposta il testo nella QTextEdit con la descrizione ottenuta
+        textbox.setText(desc)
+
+    def update_trait(self, index, new_trait):
+        if index == 1:
+            self.trait_1 = new_trait
+        elif index == 2:
+            self.trait_2 = new_trait
+
+    def save_traits(self):
+        output_file = os.path.join(self.output_dir, "traits.json")
+        traits = {"Trait 1": self.trait_1, "Trait 2": self.trait_2}
+
+        with open(output_file, "w") as f:
+            json.dump(traits, f, indent=4)
+
+    def load_traits(self):
+        output_file = os.path.join(self.output_dir, "traits.json")
+
+        try:
+            with open(output_file, "r") as f:
+                data = json.load(f)
+                return data.get("Trait 1", "Tratto"), data.get("Trait 2", "Tratto")
+        except FileNotFoundError:
+            return "Tratto", "Tratto"
+</file>
+
+<file path="ttrpglib/utility/css_import.py">
+import os
+
+css_dir = "assets/style_css"
+
+
+def load_css(file_name):
+    file_path = os.path.join(css_dir, file_name)
+    with open(file_path, "r") as file:
+        return file.read()
+
+
+def load_css_with_color(file_name, background_color):
+    css = load_css(file_name)
+    return css + f"\nQPushButton {{ background-color: {background_color}; }}"
+</file>
+
+<file path="data/background.txt">
+pene duro durissimo
+</file>
+
+<file path="ttrpglib/data_page.py">
+from PyQt5.QtWidgets import QWidget, QTabWidget, QHBoxLayout
+from ttrpglib.database.celestial_database import Database
+from ttrpglib.utility.css_import import load_css
+
+
+class DataPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+
+        # Creazione di un layout verticale per la pagina dei dati
+        data_layout = QHBoxLayout()
+
+        # Creazione del QTabWidget
+        tab_widget_data = QTabWidget()
+        tab_widget_data.setTabShape(QTabWidget.Triangular)
+        tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
+
+        # Creazione e aggiunta delle schede (tabs) al QTabWidget
+        moon_database = Database("luna")
+        planet_database = Database("pianeta")
+        spaceship_database = Database("nave")
+        spacestation_database = Database("stazione")
+
+        # Aggiungo prima Pianeti e Lune per metterle a sinistra
+        tab_widget_data.addTab(moon_database, "Lune")
+        tab_widget_data.addTab(planet_database, "Pianeti")
+
+        # Inserisci 3 tab vuote tra "Pianeti" e "Spaceship"
+        for _ in range(6):
+            empty_tab = QWidget()
+            tab_widget_data.addTab(empty_tab, "")
+            tab_widget_data.setTabEnabled(tab_widget_data.indexOf(empty_tab), False)
+
+        tab_widget_data.addTab(spaceship_database, "Navi")
+        tab_widget_data.addTab(spacestation_database, "Stazioni")
+
+        # Aggiunta del QTabWidget al layout verticale
+        data_layout.addWidget(tab_widget_data)
+
+        # Impostazione del layout per la finestra
+        self.setLayout(data_layout)
+
+
+# finire stile QTableWidget e box quando carichi o rimuovi
+</file>
+
 <file path="ttrpglib/multi_page_app.py">
 from PyQt5.QtWidgets import (
     QMainWindow,
@@ -865,7 +1295,7 @@ from ttrpglib.note_page import NotePage
 from ttrpglib.map_page import MapPage
 from ttrpglib.bounty_page import BountyPage
 from ttrpglib.data_page import DataPage
-from ttrpglib.stats_page import StatsPage, save_stats
+from ttrpglib.stats_page import StatsPage
 from ttrpglib.main_page import MainPage
 from ttrpglib.utility.css_import import load_css_with_color
 
@@ -941,9 +1371,13 @@ class MultiPageApp(QMainWindow):
         response = message_box.exec_()
 
         if response == QMessageBox.Yes:
+            stats_page = self.pages["Sheet"]
+            stats_page.attr_interface.save_attr()
+            stats_page.inventory_interface.save_inv()
+            stats_page.skill_interface.save_skills()
+            stats_page.traits_interface.save_traits()
+            stats_page.save_background()
             self.pages["Note"].save_notes()
-            self.pages["Sheet"].save_background()
-            save_stats()
             event.accept()
         elif response == QMessageBox.No:
             event.accept()
@@ -998,10 +1432,10 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
-from ttrpglib.stats_tab.attr_tab import AttrTable, save_attr
-from ttrpglib.stats_tab.inv_tab import InventoryTable, save_inv
-from ttrpglib.stats_tab.skills_tab import SkillTable, save_skills
-from ttrpglib.stats_tab.traits_tab import TraitsTable, save_traits
+from ttrpglib.stats_tab.attr_tab import AttrTable
+from ttrpglib.stats_tab.inv_tab import InventoryTable
+from ttrpglib.stats_tab.skills_tab import SkillTable
+from ttrpglib.stats_tab.traits_tab import TraitsTable
 from ttrpglib.utility.css_import import load_css
 
 
@@ -1165,533 +1599,6 @@ class StatsPage(QWidget):
                 return file.read()
         except FileNotFoundError:
             return ""
-
-
-def save_stats():
-
-    save_attr()
-    save_inv()
-    save_skills()
-    save_traits()
-</file>
-
-<file path="ttrpglib/stats_tab/attr_tab.py">
-import os
-import json
-from PyQt5.QtWidgets import (
-    QWidget,
-    QHBoxLayout,
-    QVBoxLayout,
-    QFrame,
-    QLabel,
-    QPushButton,
-)
-from PyQt5.QtCore import QSize
-from ttrpglib.utility.css_import import load_css, load_css_with_color
-
-
-class AttrTable(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-        self.setStyleSheet(load_css("QWidget.css"))
-
-    def initUI(self):
-
-        global output_dir, button_state, buttons
-
-        output_dir = "data"
-        button_state = load_attr()
-
-        buttons = [[None for _ in range(6)] for _ in range(4)]
-
-        # Layout principale verticale
-        attr_layout = QVBoxLayout()
-        attr_layout.setContentsMargins(40, 0, 40, 0)
-        attr_layout.setSpacing(30)
-
-        label_texts = ["Strength", "Agility", "Intelligence", "Willpower"]
-        attr_values = ["-2", "-1", "0", "1", "2", "3"]
-
-        # Aggiungi 4 frame allineati verticalmente
-        for i, text in enumerate(label_texts):
-
-            frame = QFrame(self)
-
-            attr_label = QLabel(text, self)
-            attr_label.setStyleSheet("color: white; font-size: 12pt")
-
-            button_layout = QHBoxLayout()
-            button_layout.addWidget(attr_label)
-
-            for j, value in enumerate(attr_values):
-                button = QPushButton(f"{value}", self)
-                button.clicked.connect(
-                    lambda _, row=i, col=j: self.attr_button_click(row, col)
-                )
-                button.setFixedSize(QSize(50, 50))
-                button_layout.addWidget(button)
-                buttons[i][j] = button
-
-                self.attr_update_button_color(button, i, j)
-
-            frame.setLayout(button_layout)
-            attr_layout.addWidget(frame)
-
-        self.setLayout(attr_layout)
-
-    def attr_button_click(self, row, col):
-        global button_state
-        button_state[row][col] = not button_state[row][col]
-        self.attr_update_button_color(buttons[row][col], row, col)
-
-    def attr_update_button_color(self, button, row, col):
-
-        if button_state[row][col]:
-            button.setStyleSheet(load_css_with_color("QButton_attr.css", "green"))
-        else:
-            button.setStyleSheet(load_css_with_color("QButton_attr.css", "black"))
-
-
-def save_attr():
-    output_file = os.path.join(output_dir, "attr.json")
-    with open(output_file, "w") as f:
-        json.dump({"attributes": button_state}, f)
-
-
-def load_attr():
-    output_file = os.path.join(output_dir, "attr.json")
-    try:
-        with open(output_file, "r") as f:
-            data = json.load(f)
-            return data["attributes"]
-    except FileNotFoundError:
-        return [[False for _ in range(6)] for _ in range(4)]
-</file>
-
-<file path="ttrpglib/stats_tab/inv_tab.py">
-import os
-import json
-from PyQt5.QtWidgets import (
-    QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
-    QPushButton,
-    QLabel,
-    QLineEdit,
-    QTextEdit,
-    QMessageBox,
-)
-from PyQt5.QtCore import Qt
-from ttrpglib.utility.css_import import load_css
-
-
-class InventoryTable(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        global inventory, money
-
-        self.setStyleSheet("background-color: black;")
-
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
-
-        self.money = load_inv()
-        money = self.money
-
-        self.setup_ui()
-
-        self.show_inv()
-
-    def setup_ui(self):
-        self.inv_layout = QHBoxLayout()
-
-        self.obj_label = QLabel("Oggetto:")
-        self.obj_label.setStyleSheet("color: white; font-size: 10pt")
-        self.obj_entry = QLineEdit()
-        self.obj_entry.setStyleSheet("color: white; border: 1px solid white")
-
-        self.quantity_label = QLabel("Quantità:")
-        self.quantity_label.setStyleSheet("color: white; font-size: 10pt")
-        self.quantity_entry = QLineEdit()
-        self.quantity_entry.setStyleSheet("color: white; border: 1px solid white")
-        self.quantity_entry.setFixedWidth(30)
-
-        self.add_button = QPushButton("Aggiungi")
-        self.add_button.clicked.connect(self.add_object)
-        self.add_button.setStyleSheet(load_css("QButton_inv.css"))
-        self.remove_button = QPushButton("Rimuovi")
-        self.remove_button.clicked.connect(self.remove_object)
-        self.remove_button.setStyleSheet(load_css("QButton_inv.css"))
-
-        self.inv_layout.addWidget(self.obj_label)
-        self.inv_layout.addWidget(self.obj_entry)
-        self.inv_layout.addWidget(self.quantity_label)
-        self.inv_layout.addWidget(self.quantity_entry)
-        self.inv_layout.addWidget(self.add_button)
-        self.inv_layout.addWidget(self.remove_button)
-
-        self.layout.addLayout(self.inv_layout)
-
-        self.inv_label = QLabel("Inventario:")
-        self.inv_label.setStyleSheet("color: white; font-size: 10pt")
-
-        self.inv_text = QTextEdit()
-        self.inv_text.setStyleSheet(
-            "color: white; border: 1px solid white; font-size: 10pt"
-        )
-        self.inv_text.setReadOnly(True)
-
-        self.layout.addWidget(self.inv_label)
-        self.layout.addWidget(self.inv_text)
-
-        left_bottom_layout = QHBoxLayout()
-
-        self.remove_1 = QPushButton("-1")
-        self.remove_1.clicked.connect(lambda: self.update_money(-1))
-        self.remove_1.setStyleSheet(load_css("QButton_removeMoney.css"))
-
-        self.remove_10 = QPushButton("-10")
-        self.remove_10.clicked.connect(lambda: self.update_money(-10))
-        self.remove_10.setStyleSheet(load_css("QButton_removeMoney.css"))
-
-        self.remove_100 = QPushButton("-100")
-        self.remove_100.clicked.connect(lambda: self.update_money(-100))
-        self.remove_100.setStyleSheet(load_css("QButton_removeMoney.css"))
-
-        left_bottom_layout.addWidget(self.remove_1)
-        left_bottom_layout.addWidget(self.remove_10)
-        left_bottom_layout.addWidget(self.remove_100)
-
-        middle_bottom_layout = QHBoxLayout()
-
-        self.money_label = QLabel(f"Money: {self.money}")
-        self.money_label.setStyleSheet("color: white; font-size: 10pt")
-        self.money_label.setAlignment(Qt.AlignCenter)
-
-        right_bottom_layout = QHBoxLayout()
-
-        self.add_100 = QPushButton("+100")
-        self.add_100.clicked.connect(lambda: self.update_money(100))
-        self.add_100.setStyleSheet(load_css("QButton_addMoney.css"))
-
-        self.add_10 = QPushButton("+10")
-        self.add_10.clicked.connect(lambda: self.update_money(10))
-        self.add_10.setStyleSheet(load_css("QButton_addMoney.css"))
-
-        self.add_1 = QPushButton("+1")
-        self.add_1.clicked.connect(lambda: self.update_money(+1))
-        self.add_1.setStyleSheet(load_css("QButton_addMoney.css"))
-
-        middle_bottom_layout.addWidget(self.money_label)
-        right_bottom_layout.addWidget(self.add_100)
-        right_bottom_layout.addWidget(self.add_10)
-        right_bottom_layout.addWidget(self.add_1)
-
-        # Layout principale per i pulsanti in bottom
-        buttons_layout = QHBoxLayout()
-        buttons_layout.addLayout(left_bottom_layout)
-        buttons_layout.addLayout(middle_bottom_layout)
-        buttons_layout.addLayout(right_bottom_layout)
-
-        self.layout.addLayout(buttons_layout)
-
-    def update_money(self, amount):
-        global money
-        self.money += amount
-        money = self.money
-        self.money_label.setText(f"Money: {self.money}")
-
-    def add_object(self):
-        obj = self.obj_entry.text()
-        quantity_str = self.quantity_entry.text()
-        if (
-            not quantity_str.isdigit()
-        ):  # Controlla se l'input della quantità è un numero valido
-            QMessageBox.critical(None, "Errore", "Inserisci una quantità valida.")
-            return
-        quantity_int = int(quantity_str)
-        if obj in inventory:
-            inventory[obj] += quantity_int
-        else:
-            inventory[obj] = quantity_int
-        self.show_inv()
-
-    def remove_object(self):
-        obj = self.obj_entry.text()
-        quantity_str = self.quantity_entry.text()
-        if (
-            not quantity_str.isdigit()
-        ):  # Controlla se l'input della quantità è un numero valido
-            QMessageBox.critical(None, "Errore", "Inserisci una quantità valida.")
-            return
-        quantity_int = int(quantity_str)
-        if obj in inventory:
-            if inventory[obj] >= quantity_int:
-                inventory[obj] -= quantity_int
-                if (
-                    inventory[obj] == 0
-                ):  # Se la quantità diventa 0, rimuovi completamente l'obj dall'inventario
-                    del inventory[obj]
-            else:
-                QMessageBox.critical(
-                    None,
-                    "Errore",
-                    "La quantità specificata è maggiore della quantità presente nell'inventario.",
-                )
-        else:
-            QMessageBox.critical(
-                None, "Errore", "L'obj specificato non è presente nell'inventario."
-            )
-        self.show_inv()
-
-    def show_inv(self):
-        inv_text = ""
-        for obj, quantity in inventory.items():
-            inv_text += f"{obj}: {quantity}\n"
-        self.inv_text.setPlainText(inv_text)
-
-        self.obj_entry.clear()
-        self.quantity_entry.clear()
-
-
-output_dir = "data"
-inventory = {}
-
-
-def save_inv():
-    global output_dir, inventory, money
-    output_file = os.path.join(output_dir, "inv.json")
-    data_to_save = {
-        "inventory": inventory,
-        "money": money,  # Salva anche il valore del denaro
-    }
-    with open(output_file, "w") as f:
-        json.dump(data_to_save, f, indent=4)
-
-
-def load_inv():
-    global output_dir, inventory, money
-    output_file = os.path.join(output_dir, "inv.json")
-    try:
-        with open(output_file, "r") as f:
-            data = json.load(f)
-            inventory = data.get("inventory", {})
-            money = data.get("money", 0)  # Imposta il valore del denaro, se presente
-    except FileNotFoundError:
-        inventory = {}
-        return 0
-    return money
-</file>
-
-<file path="ttrpglib/stats_tab/traits_tab.py">
-import os
-import json
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QComboBox, QTextEdit
-from ttrpglib.utility.css_import import load_css
-
-
-class TraitsTable(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-        self.setStyleSheet(load_css("QWidget.css"))
-
-    def initUI(self):
-
-        global output_dir, trait_1, trait_2
-
-        output_dir = "data"
-
-        trait_1, trait_2 = load_traits()
-
-        layout1 = QVBoxLayout()
-        layout2 = QVBoxLayout()
-
-        self.descriptions = {
-            "Tratto": "",
-            "Alien DNA": "Ti sei sottoposto volontariamente ad un esperimento che combina DNA umano con quello alieno. Di conseguenza, hai più salute e sei più incline alle modifiche organiche del tuo corpo, ma gli oggetti di cura ed il cibo non sono molto efficaci su di te.",
-            "Dream House": "Sei il proprietario di una casa di lusso su un pianeta paradisiaco! Purtroppo però la casa è accompagnata da un mutuo di 125.000 crediti che deve essere pagato a rate mensili.",
-            "Kid Stuff": "I tuoi genitori sono vivi e vegeti e puoi andarli a trovare a casa loro. Ogni settimana, però, devi inviare il 2% dei tuoi guadagni a loro.",
-            "Spaced": "Il tuo corpo si è acclimatato allo spazio e alla microgravità. Sei più agile e scattante quando sei nello spazio, ma hai difficoltà sulla terra ferma. (Non può essere combinato con Terra Firma)",
-            "Terra Firma": "Non ti sei mai abituato allo spazio e alla microgravità. Sei più agile e scattante sulla terra ferma, ma hai difficoltà nello spazio. (Non può essere combinato con Spaced)",
-            "Wanted": "Qualcuno ha messo una taglia sulla tua testa e ormai la voce si è sparsa. Sei ricercato dai cacciatori di taglie, che potrebbero presentarti per catturarti, o peggio, ucciderti. Di conseguenza, sai bene come nasconderti per passare una notte sicura.",
-        }
-
-        # Primo layout
-        combo_traits1 = QComboBox()
-        combo_traits1.setStyleSheet(load_css("QComboBox.css"))
-        for key in self.descriptions.keys():
-            combo_traits1.addItem(key)
-
-        combo_traits1.currentTextChanged.connect(
-            lambda text: self.show_descr(text, descr_traits1)
-        )
-        combo_traits1.currentTextChanged.connect(
-            lambda temp_trait1=combo_traits1.currentText(): self.update_trait(
-                1, temp_trait1
-            )
-        )
-
-        descr_traits1 = QTextEdit()
-        descr_traits1.setStyleSheet(load_css("QTextEdit.css"))
-        descr_traits1.setReadOnly(True)
-
-        layout1.addWidget(combo_traits1)
-        layout1.addWidget(descr_traits1)
-
-        combo_traits1.setCurrentText(trait_1)
-        self.show_descr(trait_1, descr_traits1)
-
-        # Secondo layout
-        combo_traits2 = QComboBox()
-        combo_traits2.setStyleSheet(load_css("QComboBox.css"))
-
-        for key in self.descriptions.keys():
-            combo_traits2.addItem(key)
-
-        combo_traits2.currentTextChanged.connect(
-            lambda text: self.show_descr(text, descr_traits2)
-        )
-        combo_traits2.currentTextChanged.connect(
-            lambda temp_trait2=combo_traits2.currentText(): self.update_trait(
-                2, temp_trait2
-            )
-        )
-
-        descr_traits2 = QTextEdit()
-        descr_traits2.setStyleSheet(load_css("QTextEdit.css"))
-        descr_traits2.setReadOnly(True)
-
-        layout2.addWidget(combo_traits2)
-        layout2.addWidget(descr_traits2)
-
-        combo_traits2.setCurrentText(trait_2)
-        self.show_descr(trait_2, descr_traits2)
-
-        # Layout principale
-        main_layout = QVBoxLayout()
-        main_layout.addLayout(layout1)
-        main_layout.addLayout(layout2)
-
-        self.setLayout(main_layout)
-
-    def show_descr(self, text, textbox):
-        desc = self.descriptions.get(text, "Descrizione non trovata")
-        # Imposta il testo nella QTextEdit con la descrizione ottenuta
-        textbox.setText(desc)
-
-    def update_trait(self, index, new_trait):
-        global trait_1, trait_2
-        if index == 1:
-            trait_1 = new_trait
-        elif index == 2:
-            trait_2 = new_trait
-
-
-def save_traits():
-    output_file = os.path.join(output_dir, "traits.json")
-    traits = {"Trait 1": trait_1, "Trait 2": trait_2}
-
-    with open(output_file, "w") as f:
-        json.dump(traits, f, indent=4)
-
-
-def load_traits():
-    output_file = os.path.join(output_dir, "traits.json")
-
-    try:
-        with open(output_file, "r") as f:
-            data = json.load(f)
-            trait_1 = data.get("Trait 1", "Tratto")
-            trait_2 = data.get("Trait 2", "Tratto")
-
-            return trait_1, trait_2
-    except FileNotFoundError:
-        return "Tratto", "Tratto"
-</file>
-
-<file path="ttrpglib/utility/css_import.py">
-import os
-
-css_dir = "assets/style_css"
-
-
-def load_css(file_name):
-    file_path = os.path.join(css_dir, file_name)
-    with open(file_path, "r") as file:
-        return file.read()
-
-
-def load_css_with_color(file_name, background_color):
-    css = load_css(file_name)
-    return css + f"\nQPushButton {{ background-color: {background_color}; }}"
-</file>
-
-<file path="ttrpglib/data_page.py">
-from PyQt5.QtWidgets import QWidget, QTabWidget, QHBoxLayout
-from ttrpglib.database.celestial_database import Database
-from ttrpglib.utility.css_import import load_css
-
-
-class DataPage(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-
-    def initUI(self):
-
-        # Creazione di un layout verticale per la pagina dei dati
-        data_layout = QHBoxLayout()
-
-        # Creazione del QTabWidget
-        tab_widget_data = QTabWidget()
-        tab_widget_data.setTabShape(QTabWidget.Triangular)
-        tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
-
-        # Creazione e aggiunta delle schede (tabs) al QTabWidget
-        moon_database = Database("luna")
-        planet_database = Database("pianeta")
-        spaceship_database = Database("nave")
-        spacestation_database = Database("stazione")
-
-        # Aggiungo prima Pianeti e Lune per metterle a sinistra
-        tab_widget_data.addTab(moon_database, "Lune")
-        tab_widget_data.addTab(planet_database, "Pianeti")
-
-        # Inserisci 3 tab vuote tra "Pianeti" e "Spaceship"
-        for _ in range(6):
-            empty_tab = QWidget()
-            tab_widget_data.addTab(empty_tab, "")
-            tab_widget_data.setTabEnabled(tab_widget_data.indexOf(empty_tab), False)
-
-        tab_widget_data.addTab(spaceship_database, "Navi")
-        tab_widget_data.addTab(spacestation_database, "Stazioni")
-
-        # Aggiunta del QTabWidget al layout verticale
-        data_layout.addWidget(tab_widget_data)
-
-        # Impostazione del layout per la finestra
-        self.setLayout(data_layout)
-
-
-# finire stile QTableWidget e box quando carichi o rimuovi
-</file>
-
-<file path="data/note.txt">
-alkakdlkdld    fvgdxfb   fffff palle
-</file>
-
-<file path="data/skills.json">
-[false, true, false, false, false, false, true, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
-</file>
-
-<file path="data/traits.json">
-{
-    "Trait 1": "Spaced",
-    "Trait 2": "Spaced"
-}
 </file>
 
 <file path="README.md">
@@ -1760,104 +1667,82 @@ from ttrpglib.utility.css_import import load_css
 class SkillTable(QWidget):
     def __init__(self):
         super().__init__()
+        self.output_dir = "data"
+        self.checkboxes = [None for _ in range(25)]
+        self.checkboxes_states = self.load_skills()
         self.initUI()
         self.setStyleSheet(load_css("QWidget.css"))
 
     def initUI(self):
-
-        global checkboxes_states, checkboxes, output_dir
-
-        output_dir = "data"
-
-        checkboxes_states = load_skills()
-        checkboxes = [None for _ in range(25)]
-
         main_layout = QHBoxLayout()
 
         skill_layout1 = QVBoxLayout()
         skills1 = [
-            "Acrobatics",
-            "Alien",
-            "Athletics",
-            "Constitution",
-            "Diplomacy",
-            "Drive",
-            "Engineering",
-            "Gambling",
-            "Hacking",
-            "History",
-            "Insight",
+            "Acrobatics", "Alien", "Athletics", "Constitution", "Diplomacy",
+            "Drive", "Engineering", "Gambling", "Hacking", "History", "Insight",
         ]
+
         for i, skill in enumerate(skills1):
-            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
+            checkbox = QCheckBox(skill)
             checkbox.setStyleSheet(load_css("QCheckBox.css"))
             checkbox.clicked.connect(lambda _, pos=i: self.update_checkbox(pos))
             skill_layout1.addWidget(checkbox)
-            checkboxes[i] = checkbox
-
-            if checkboxes_states[i] is True:
-                checkboxes[i].setChecked(True)
-                # checkboxes[i].setStyleSheet(load_css("QCheckBox.css"))
+            self.checkboxes[i] = checkbox
+            if self.checkboxes_states[i]:
+                self.checkboxes[i].setChecked(True)
 
         main_layout.addLayout(skill_layout1)
 
-        # Layout per le skill group 2
         skill_layout2 = QVBoxLayout()
         skills2 = [
-            "Languages",
-            "Manipulation",
-            "Medic",
-            "Melee",
-            "Perception",
-            "Performance",
-            "Pilot",
-            "Religion",
-            "Science",
-            "Shooting",
-            "Sleight of Hand",
-            "Stealth",
-            "Survival",
-            "Tech",
+            "Languages", "Manipulation", "Medic", "Melee", "Perception",
+            "Performance", "Pilot", "Religion", "Science", "Shooting",
+            "Sleight of Hand", "Stealth", "Survival", "Tech",
         ]
+
         for j, skill in enumerate(skills2):
             k = j + len(skills1)
-            checkbox = QCheckBox(skill)  # Collega la funzione di gestione dello stato
+            checkbox = QCheckBox(skill)
             checkbox.setStyleSheet(load_css("QCheckBox.css"))
             checkbox.clicked.connect(lambda _, pos=k: self.update_checkbox(pos))
             skill_layout2.addWidget(checkbox)
-            checkboxes[k] = checkbox
-
-            if checkboxes_states[k] is True:
-                checkboxes[k].setChecked(True)
-                # checkboxes[k].setStyleSheet(load_css("QCheckBox.css"))
+            self.checkboxes[k] = checkbox
+            if self.checkboxes_states[k]:
+                self.checkboxes[k].setChecked(True)
 
         main_layout.addLayout(skill_layout2)
-
         self.setLayout(main_layout)
 
     def update_checkbox(self, pos):
-        global checkboxes_states
-        checkboxes_states[pos] = not checkboxes_states[pos]
+        self.checkboxes_states[pos] = not self.checkboxes_states[pos]
 
+    def save_skills(self):
+        output_file = os.path.join(self.output_dir, "skills.json")
+        with open(output_file, "w") as f:
+            json.dump(self.checkboxes_states, f)
 
-def save_skills():
-    output_file = os.path.join(output_dir, "skills.json")
-    with open(output_file, "w") as f:
-        json.dump(checkboxes_states, f)
-
-
-def load_skills():
-    output_file = os.path.join(output_dir, "skills.json")
-    try:
-        with open(output_file, "r") as f:
-            data = json.load(f)
-            return data
-    except FileNotFoundError:
-        return [False for _ in range(25)]
+    def load_skills(self):
+        output_file = os.path.join(self.output_dir, "skills.json")
+        try:
+            with open(output_file, "r") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return [False for _ in range(25)]
 </file>
 
-<file path="data/attr.json">
-{"attributes": [[true, true, true, true, false, false], [true, true, false, false, false, false], [false, false, false, false, true, false], [false, false, false, false, false, false]]}
+<file path="data/note.txt">
+alkakdlkdld    fvgdxfb   fffff palle e cazzi
+</file>
+
+<file path="data/skills.json">
+[false, true, false, false, false, false, true, true, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+</file>
+
+<file path="data/traits.json">
+{
+    "Trait 1": "Wanted",
+    "Trait 2": "Tratto"
+}
 </file>
 
 <file path="main.py">
@@ -1883,6 +1768,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+</file>
+
+<file path="data/attr.json">
+{"attributes": [[true, true, true, true, false, false], [true, true, true, true, false, false], [true, true, true, true, true, true], [true, true, true, true, true, true]]}
 </file>
 
 <file path=".gitignore">
@@ -2053,6 +1942,7 @@ assets/font/
 assets/icon/
 export/
 **.pyc
+data/credentials.json
 </file>
 
 </files>

@@ -26,9 +26,7 @@ Python 3.12
 ## Usage
 
 1. Launch the program by executing `main.py`.
-2. When prompted for login credentials, use the following:
-   - Username: admin
-   - Password: password
+2. When prompted for login credentials, use the credentials defined in `data/credentials.json`.
 3. Follow the on-screen instructions to navigate through the available features.
 4. Utilize the features to create character sheets, access maps and celestial data, manage inventory, and take notes as needed during gameplay.
 

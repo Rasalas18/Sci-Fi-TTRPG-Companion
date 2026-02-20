@@ -7,19 +7,14 @@ from ttrpglib.utility.css_import import load_css
 class TraitsTable(QWidget):
     def __init__(self):
         super().__init__()
+        self.output_dir = "data"
+        self.trait_1 = "Tratto"
+        self.trait_2 = "Tratto"
         self.initUI()
         self.setStyleSheet(load_css("QWidget.css"))
 
     def initUI(self):
-
-        global output_dir, trait_1, trait_2
-
-        output_dir = "data"
-
-        trait_1, trait_2 = load_traits()
-
-        layout1 = QVBoxLayout()
-        layout2 = QVBoxLayout()
+        self.trait_1, self.trait_2 = self.load_traits()
 
         self.descriptions = {
             "Tratto": "",
@@ -31,6 +26,9 @@ class TraitsTable(QWidget):
             "Wanted": "Qualcuno ha messo una taglia sulla tua testa e ormai la voce si è sparsa. Sei ricercato dai cacciatori di taglie, che potrebbero presentarti per catturarti, o peggio, ucciderti. Di conseguenza, sai bene come nasconderti per passare una notte sicura.",
         }
 
+        layout1 = QVBoxLayout()
+        layout2 = QVBoxLayout()
+
         # Primo layout
         combo_traits1 = QComboBox()
         combo_traits1.setStyleSheet(load_css("QComboBox.css"))
@@ -41,9 +39,7 @@ class TraitsTable(QWidget):
             lambda text: self.show_descr(text, descr_traits1)
         )
         combo_traits1.currentTextChanged.connect(
-            lambda temp_trait1=combo_traits1.currentText(): self.update_trait(
-                1, temp_trait1
-            )
+            lambda text: self.update_trait(1, text)
         )
 
         descr_traits1 = QTextEdit()
@@ -53,8 +49,8 @@ class TraitsTable(QWidget):
         layout1.addWidget(combo_traits1)
         layout1.addWidget(descr_traits1)
 
-        combo_traits1.setCurrentText(trait_1)
-        self.show_descr(trait_1, descr_traits1)
+        combo_traits1.setCurrentText(self.trait_1)
+        self.show_descr(self.trait_1, descr_traits1)
 
         # Secondo layout
         combo_traits2 = QComboBox()
@@ -67,9 +63,7 @@ class TraitsTable(QWidget):
             lambda text: self.show_descr(text, descr_traits2)
         )
         combo_traits2.currentTextChanged.connect(
-            lambda temp_trait2=combo_traits2.currentText(): self.update_trait(
-                2, temp_trait2
-            )
+            lambda text: self.update_trait(2, text)
         )
 
         descr_traits2 = QTextEdit()
@@ -79,8 +73,8 @@ class TraitsTable(QWidget):
         layout2.addWidget(combo_traits2)
         layout2.addWidget(descr_traits2)
 
-        combo_traits2.setCurrentText(trait_2)
-        self.show_descr(trait_2, descr_traits2)
+        combo_traits2.setCurrentText(self.trait_2)
+        self.show_descr(self.trait_2, descr_traits2)
 
         # Layout principale
         main_layout = QVBoxLayout()
@@ -95,30 +89,24 @@ class TraitsTable(QWidget):
         textbox.setText(desc)
 
     def update_trait(self, index, new_trait):
-        global trait_1, trait_2
         if index == 1:
-            trait_1 = new_trait
+            self.trait_1 = new_trait
         elif index == 2:
-            trait_2 = new_trait
+            self.trait_2 = new_trait
 
+    def save_traits(self):
+        output_file = os.path.join(self.output_dir, "traits.json")
+        traits = {"Trait 1": self.trait_1, "Trait 2": self.trait_2}
 
-def save_traits():
-    output_file = os.path.join(output_dir, "traits.json")
-    traits = {"Trait 1": trait_1, "Trait 2": trait_2}
+        with open(output_file, "w") as f:
+            json.dump(traits, f, indent=4)
 
-    with open(output_file, "w") as f:
-        json.dump(traits, f, indent=4)
+    def load_traits(self):
+        output_file = os.path.join(self.output_dir, "traits.json")
 
-
-def load_traits():
-    output_file = os.path.join(output_dir, "traits.json")
-
-    try:
-        with open(output_file, "r") as f:
-            data = json.load(f)
-            trait_1 = data.get("Trait 1", "Tratto")
-            trait_2 = data.get("Trait 2", "Tratto")
-
-            return trait_1, trait_2
-    except FileNotFoundError:
-        return "Tratto", "Tratto"
+        try:
+            with open(output_file, "r") as f:
+                data = json.load(f)
+                return data.get("Trait 1", "Tratto"), data.get("Trait 2", "Tratto")
+        except FileNotFoundError:
+            return "Tratto", "Tratto"
