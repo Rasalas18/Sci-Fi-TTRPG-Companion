@@ -19,13 +19,18 @@ class DataPage(QWidget):
         tab_widget_data.setTabShape(QTabWidget.Triangular)
         tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
 
-        self.databases = [Database("luna"), Database("pianeta"), Database("nave"), Database("stazione")]
+        moon_db = Database("luna")
+        planets_db = Database("pianeta")
+        ships_db = Database("nave")
+        stations_db = Database("stazione")
+
+        self.databases = [moon_db, planets_db, ships_db, stations_db]
 
         # Aggiungo databases
-        tab_widget_data.addTab(Database("luna"), "Lune")
-        tab_widget_data.addTab(Database("pianeta"), "Pianeti")
-        tab_widget_data.addTab(Database("nave"), "Navi")
-        tab_widget_data.addTab(Database("stazione"), "Stazioni")
+        tab_widget_data.addTab(moon_db, "Lune")
+        tab_widget_data.addTab(planets_db, "Pianeti")
+        tab_widget_data.addTab(ships_db, "Navi")
+        tab_widget_data.addTab(stations_db, "Stazioni")
 
         # Aggiunta del QTabWidget al layout verticale
         data_layout.addWidget(tab_widget_data)
