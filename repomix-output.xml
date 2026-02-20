@@ -556,6 +556,53 @@ class BountyPage(QWidget):
         layout.addWidget(label)
 </file>
 
+<file path="ttrpglib/main_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class MainPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        layout = QVBoxLayout(self)
+        label = QLabel("Campagna Space Adventure", alignment=Qt.AlignCenter)
+        label.setStyleSheet("color: green; font-size: 24px;")
+        layout.addWidget(label)
+</file>
+
+<file path="ttrpglib/map_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
+from ttrpglib.utility.css_import import load_css
+
+
+class MapPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        layout = QVBoxLayout(self)
+        label = QLabel("Pagina della Mappa", alignment=Qt.AlignCenter)
+        label.setStyleSheet("color: green; font-size: 24px;")
+        layout.addWidget(label)
+</file>
+
+<file path="requirements.txt">
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+</file>
+
+<file path="setup.cfg">
+[flake8]
+ignore = F541, E501
+
+[metadata]
+license_file = LICENSE
+</file>
+
 <file path="ttrpglib/login_page.py">
 import os
 import json
@@ -625,65 +672,6 @@ class LoginPage(QMainWindow):
             )
 </file>
 
-<file path="ttrpglib/main_page.py">
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
-from PyQt5.QtCore import Qt
-from ttrpglib.utility.css_import import load_css
-
-
-class MainPage(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet(load_css("QWidget.css"))
-
-        layout = QVBoxLayout(self)
-        label = QLabel("Campagna Space Adventure", alignment=Qt.AlignCenter)
-        label.setStyleSheet("color: green; font-size: 24px;")
-        layout.addWidget(label)
-</file>
-
-<file path="ttrpglib/map_page.py">
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
-from PyQt5.QtCore import Qt
-from ttrpglib.utility.css_import import load_css
-
-
-class MapPage(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet(load_css("QWidget.css"))
-
-        layout = QVBoxLayout(self)
-        label = QLabel("Pagina della Mappa", alignment=Qt.AlignCenter)
-        label.setStyleSheet("color: green; font-size: 24px;")
-        layout.addWidget(label)
-</file>
-
-<file path="data/inv.json">
-{
-    "inventory": {
-        "Pene": 9,
-        "Penino": 10,
-        "cazzi": 10,
-        "pennacchio": 20
-    },
-    "money": 600
-}
-</file>
-
-<file path="requirements.txt">
-PyQt5==5.15.10
-PyQt5-Qt5==5.15.2
-</file>
-
-<file path="setup.cfg">
-[flake8]
-ignore = F541, E501
-
-[metadata]
-license_file = LICENSE
-</file>
-
 <file path="assets/style_css/QButton_data.css">
 /* Stile di base per QPushButton */
 QPushButton {
@@ -723,6 +711,18 @@ QListWidget::item {
 QListWidget::item:selected {
   background-color: green; /* Colore di sfondo selezionato */
   color: white; /* Colore del testo selezionato */
+}
+</file>
+
+<file path="data/inv.json">
+{
+    "inventory": {
+        "Pene": 9,
+        "Penino": 10,
+        "cazzi": 10,
+        "pennacchio": 20
+    },
+    "money": 600
 }
 </file>
 
@@ -847,6 +847,107 @@ class Database(QWidget):
             "Successo",
             f"Duplicati di {self.celestial_body.capitalize()} rimossi con successo!",
         )
+</file>
+
+<file path="ttrpglib/utility/css_import.py">
+import os
+
+css_dir = "assets/style_css"
+
+
+def load_css(file_name):
+    file_path = os.path.join(css_dir, file_name)
+    with open(file_path, "r") as file:
+        return file.read()
+
+
+def load_css_with_color(file_name, background_color):
+    css = load_css(file_name)
+    return css + f"\nQPushButton {{ background-color: {background_color}; }}"
+</file>
+
+<file path="ttrpglib/data_page.py">
+from PyQt5.QtWidgets import QWidget, QTabWidget, QHBoxLayout
+from ttrpglib.database.celestial_database import Database
+from ttrpglib.utility.css_import import load_css
+
+
+class DataPage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+
+        # Creazione di un layout verticale per la pagina dei dati
+        data_layout = QHBoxLayout()
+
+        # Creazione del QTabWidget
+        tab_widget_data = QTabWidget()
+        tab_widget_data.setTabShape(QTabWidget.Triangular)
+        tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
+
+        # Creazione e aggiunta delle schede (tabs) al QTabWidget
+        moon_database = Database("luna")
+        planet_database = Database("pianeta")
+        spaceship_database = Database("nave")
+        spacestation_database = Database("stazione")
+
+        # Aggiungo prima Pianeti e Lune per metterle a sinistra
+        tab_widget_data.addTab(moon_database, "Lune")
+        tab_widget_data.addTab(planet_database, "Pianeti")
+
+        # Inserisci 3 tab vuote tra "Pianeti" e "Spaceship"
+        for _ in range(6):
+            empty_tab = QWidget()
+            tab_widget_data.addTab(empty_tab, "")
+            tab_widget_data.setTabEnabled(tab_widget_data.indexOf(empty_tab), False)
+
+        tab_widget_data.addTab(spaceship_database, "Navi")
+        tab_widget_data.addTab(spacestation_database, "Stazioni")
+
+        # Aggiunta del QTabWidget al layout verticale
+        data_layout.addWidget(tab_widget_data)
+
+        # Impostazione del layout per la finestra
+        self.setLayout(data_layout)
+
+
+# finire stile QTableWidget e box quando carichi o rimuovi
+</file>
+
+<file path="ttrpglib/note_page.py">
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTextEdit
+import os
+from ttrpglib.utility.css_import import load_css
+
+
+class NotePage(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setStyleSheet(load_css("QWidget.css"))
+
+        self.output_dir = "data"
+
+        layout = QVBoxLayout(self)
+        self.note_text = QTextEdit()
+        self.note_text.setStyleSheet(load_css("QTextEdit.css"))
+        layout.addWidget(self.note_text)
+
+        self.note_text.setText(self.load_notes())
+
+    def save_notes(self):
+        output_file = os.path.join(self.output_dir, "note.txt")
+        with open(output_file, "w") as file:
+            file.write(self.note_text.toPlainText())
+
+    def load_notes(self):
+        output_file = os.path.join(self.output_dir, "note.txt")
+        try:
+            with open(output_file, "r") as file:
+                return file.read()
+        except FileNotFoundError:
+            return ""
 </file>
 
 <file path="ttrpglib/stats_tab/attr_tab.py">
@@ -1210,75 +1311,8 @@ class TraitsTable(QWidget):
             return "Tratto", "Tratto"
 </file>
 
-<file path="ttrpglib/utility/css_import.py">
-import os
-
-css_dir = "assets/style_css"
-
-
-def load_css(file_name):
-    file_path = os.path.join(css_dir, file_name)
-    with open(file_path, "r") as file:
-        return file.read()
-
-
-def load_css_with_color(file_name, background_color):
-    css = load_css(file_name)
-    return css + f"\nQPushButton {{ background-color: {background_color}; }}"
-</file>
-
 <file path="data/background.txt">
 pene duro durissimo
-</file>
-
-<file path="ttrpglib/data_page.py">
-from PyQt5.QtWidgets import QWidget, QTabWidget, QHBoxLayout
-from ttrpglib.database.celestial_database import Database
-from ttrpglib.utility.css_import import load_css
-
-
-class DataPage(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.initUI()
-
-    def initUI(self):
-
-        # Creazione di un layout verticale per la pagina dei dati
-        data_layout = QHBoxLayout()
-
-        # Creazione del QTabWidget
-        tab_widget_data = QTabWidget()
-        tab_widget_data.setTabShape(QTabWidget.Triangular)
-        tab_widget_data.setStyleSheet(load_css("QTabWidget_data.css"))
-
-        # Creazione e aggiunta delle schede (tabs) al QTabWidget
-        moon_database = Database("luna")
-        planet_database = Database("pianeta")
-        spaceship_database = Database("nave")
-        spacestation_database = Database("stazione")
-
-        # Aggiungo prima Pianeti e Lune per metterle a sinistra
-        tab_widget_data.addTab(moon_database, "Lune")
-        tab_widget_data.addTab(planet_database, "Pianeti")
-
-        # Inserisci 3 tab vuote tra "Pianeti" e "Spaceship"
-        for _ in range(6):
-            empty_tab = QWidget()
-            tab_widget_data.addTab(empty_tab, "")
-            tab_widget_data.setTabEnabled(tab_widget_data.indexOf(empty_tab), False)
-
-        tab_widget_data.addTab(spaceship_database, "Navi")
-        tab_widget_data.addTab(spacestation_database, "Stazioni")
-
-        # Aggiunta del QTabWidget al layout verticale
-        data_layout.addWidget(tab_widget_data)
-
-        # Impostazione del layout per la finestra
-        self.setLayout(data_layout)
-
-
-# finire stile QTableWidget e box quando carichi o rimuovi
 </file>
 
 <file path="ttrpglib/multi_page_app.py">
@@ -1383,40 +1417,6 @@ class MultiPageApp(QMainWindow):
             event.accept()
         else:
             event.ignore()
-</file>
-
-<file path="ttrpglib/note_page.py">
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTextEdit
-import os
-from ttrpglib.utility.css_import import load_css
-
-
-class NotePage(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet(load_css("QWidget.css"))
-
-        self.output_dir = "data"
-
-        layout = QVBoxLayout(self)
-        self.note_text = QTextEdit()
-        self.note_text.setStyleSheet(load_css("QTextEdit.css"))
-        layout.addWidget(self.note_text)
-
-        self.note_text.setText(self.load_notes())
-
-    def save_notes(self):
-        output_file = os.path.join(self.output_dir, "note.txt")
-        with open(output_file, "w") as file:
-            file.write(self.note_text.toPlainText())
-
-    def load_notes(self):
-        output_file = os.path.join(self.output_dir, "note.txt")
-        try:
-            with open(output_file, "r") as file:
-                return file.read()
-        except FileNotFoundError:
-            return ""
 </file>
 
 <file path="ttrpglib/stats_page.py">
@@ -1630,9 +1630,7 @@ Python 3.12
 ## Usage
 
 1. Launch the program by executing `main.py`.
-2. When prompted for login credentials, use the following:
-   - Username: admin
-   - Password: password
+2. When prompted for login credentials, use the credentials defined in `data/credentials.json`.
 3. Follow the on-screen instructions to navigate through the available features.
 4. Utilize the features to create character sheets, access maps and celestial data, manage inventory, and take notes as needed during gameplay.
 
@@ -1943,6 +1941,7 @@ assets/icon/
 export/
 **.pyc
 data/credentials.json
+z_Report
 </file>
 
 </files>

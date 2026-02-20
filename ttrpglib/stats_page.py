@@ -45,7 +45,7 @@ class StatsPage(QWidget):
 
         attr_tab = QWidget()
 
-        # Aggiunta del layout nella pagina "Abilities" e allineamento centrale dei widget
+        # Aggiunta del layout nella pagina "Attributes" e allineamento centrale dei widget
         attr_layout = QVBoxLayout(attr_tab)
         attr_layout.setAlignment(Qt.AlignCenter)
 
@@ -133,10 +133,6 @@ class StatsPage(QWidget):
         # Layout Bottom per background (scrollable)
         # ----------------------------------------------
 
-        tab_widget_down = QTabWidget()
-        tab_widget_down.setTabShape(QTabWidget.Triangular)
-        tab_widget_down.setStyleSheet(load_css("QTabWidget.css"))
-
         background_label = QLabel("Background")
         background_label.setStyleSheet(load_css("QLabel_down.css"))
         background_label.setAlignment(Qt.AlignCenter)
@@ -146,7 +142,6 @@ class StatsPage(QWidget):
         self.background_text.setStyleSheet(
             "color: white; font-size: 12pt; width: 400px; height: 100px"
         )
-        # background_text.setFixedSize(400, 200)  # Imposta dimensioni fisse
 
         # Aggiunge il QTextEdit scrollabile al layout_bottom
         layout_bottom.addWidget(background_label)

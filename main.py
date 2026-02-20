@@ -7,10 +7,8 @@ from ttrpglib.multi_page_app import MultiPageApp
 def main():
     def login_success():
         multi_page_app = MultiPageApp()
-        multi_page_app.show()
         multi_page_app.setFixedSize(1152, 864)  # Imposta le dimensioni fisse
-        # app_size = multi_page_app.size()
-        # print("Dimensioni di MultiPageApp:", app_size.width(), "x", app_size.height())
+        multi_page_app.show()
 
     app = QApplication(sys.argv)
     login_page = LoginPage(login_success)

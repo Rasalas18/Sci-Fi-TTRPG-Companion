@@ -33,6 +33,8 @@ class DataPage(QWidget):
             empty_tab = QWidget()
             tab_widget_data.addTab(empty_tab, "")
             tab_widget_data.setTabEnabled(tab_widget_data.indexOf(empty_tab), False)
+        
+        # Da rifare il layout
 
         tab_widget_data.addTab(spaceship_database, "Navi")
         tab_widget_data.addTab(spacestation_database, "Stazioni")
