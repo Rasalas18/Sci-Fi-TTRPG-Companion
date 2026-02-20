@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 from ttrpglib.utility.css_import import load_css
+from PyQt5.QtWidgets import QHeaderView, QSizePolicy
 
 
 class Database(QWidget):
@@ -49,6 +50,13 @@ class Database(QWidget):
         self.planet_table.setHorizontalHeaderLabels(
             ["Nome", "Tipo", "Posizione", "Proprietà", "Sistema"]
         )
+
+        header = self.planet_table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.Stretch)
+
+        self.planet_table.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.planet_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
         self.load_database()
         self.planet_table.setEditTriggers(QTableWidget.NoEditTriggers)
 
@@ -62,7 +70,7 @@ class Database(QWidget):
         self.remove_duplicates_button.setStyleSheet(load_css("QButton_data.css"))
         self.remove_duplicates_button.clicked.connect(self.remove_duplicate)
 
-        self.layout.addWidget(self.planet_table)
+        self.layout.addWidget(self.planet_table, stretch=1)
         self.layout.addWidget(self.load_from_sql_button)
         self.layout.addWidget(self.remove_duplicates_button)
 
