@@ -7,6 +7,8 @@ from PyQt5.QtWidgets import (
     QStackedWidget,
     QMessageBox,
 )
+from PyQt5.QtCore import QTimer
+from datetime import datetime
 from ttrpglib.note_page import NotePage
 from ttrpglib.map_page import MapPage
 from ttrpglib.bounty_page import BountyPage
@@ -14,6 +16,8 @@ from ttrpglib.data_page import DataPage
 from ttrpglib.stats_page import StatsPage
 from ttrpglib.main_page import MainPage
 from ttrpglib.utility.css_import import load_css_with_color
+
+AUTOSAVE_INTERVAL = 5 * 1 * 1000
 
 
 class MultiPageApp(QMainWindow):
@@ -60,6 +64,10 @@ class MultiPageApp(QMainWindow):
         self.show_page("Home")
         self.multi_update_button_color(self.buttons[0])
 
+        self.autosave_timer = QTimer(self)
+        self.autosave_timer.timeout.connect(self.autosave)
+        self.autosave_timer.start(AUTOSAVE_INTERVAL)
+
     def multi_update_button_color(self, current_button):
         for button in self.buttons:
             if button == current_button:
@@ -103,3 +111,14 @@ class MultiPageApp(QMainWindow):
             event.accept()
         else:
             event.ignore()
+
+    def autosave(self):
+        stats_page = self.pages["Sheet"]
+        stats_page.attr_interface.save_attr()
+        stats_page.inventory_interface.save_inv()
+        stats_page.skill_interface.save_skills()
+        stats_page.traits_interface.save_traits()
+        stats_page.save_background()
+        self.pages["Note"].save_notes()
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        print(f"[AUTOSAVE] Salvataggio automatico eseguito alle {timestamp}")
