@@ -19,7 +19,7 @@ class Database(QWidget):
 
         self.celestial_body = celestial_body.lower()
 
-        database_dir = "data/database_out"
+        database_dir = os.path.join("data", "database_out")
         if not os.path.exists(database_dir):
             os.makedirs(database_dir)
 

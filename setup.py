@@ -7,7 +7,7 @@ setup(
     name="Space_Adv_Program",
     version="1.0.0",
     packages=find_packages(exclude=["tests", ".github"]),
-    url="https://github.com/author_name/project_urlname/",
+    url="https://github.com/Rasalas18/SpaceSystemProgramPython/",
     license="LICENSE.txt",
     description="My program for my ttrpg game",
     long_description=readme,
